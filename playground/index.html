@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Playground</title>
+    <title>Playground</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap"
-        rel="stylesheet">
+    <!-- Removed specific Google Fonts import to favor system fonts defined in CSS -->
     <style>
         /* Playground specific overrides */
         .playground-btn-row {
@@ -43,7 +41,7 @@
         <div class="module-list-container scrollbar-hide">
             <div class="content-wrapper">
                 <div class="header-section">
-                    <h1 class="main-title">开发者操场</h1>
+                    <h1 class="main-title">Playground</h1>
                     <a href="#" class="baike-link">
                         <img src="assets/ui/baidu.png" alt="Baidu" class="link-icon-img">
                         说明书 & 零件库
@@ -221,6 +219,39 @@
                                     </p>
                                     <div class="playground-btn-row">
                                         <button class="playground-btn" onclick="selectModule(3)">查看效果演示</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 4: UI Kits & Animations -->
+                    <div class="module-item" data-id="4" onclick="selectModule(4)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle inactive-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title inactive-text">UI 组件 (UI Kits)</h2>
+                                </div>
+                                <div class="expand-icon">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        纯前端实现的现代化 UI 组件库，包含按钮、输入框、加载动画等。
+                                    </p>
+                                    <div class="playground-btn-row">
+                                        <button class="playground-btn" onclick="selectModule(4)">查看组件库</button>
                                     </div>
                                 </div>
                             </div>
@@ -430,12 +461,98 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <script src="js/script.js?v=2"></script>
-        <script src="js/snow-effect.js"></script>
-        <script src="js/playground.js"></script>
+                <!-- Module 4: UI Elements Demo -->
+                <div id="uiElementsWrapper" class="effects-wrapper"
+                    style="display: none; height: 100%; overflow-y: auto;">
+                    <div class="effects-container"
+                        style="display: flex; flex-direction: column; gap: 3rem; width: 100%; max-width: 800px; padding: 2rem; padding-bottom: 6rem;">
+
+                        <!-- Buttons Section -->
+                        <div class="ui-section">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Buttons</h3>
+                            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+                                <button class="btn-modern btn-primary">Primary</button>
+                                <button class="btn-modern btn-secondary">Secondary</button>
+                                <button class="btn-modern btn-accent">Accent</button>
+                                <button class="btn-modern btn-glass">Glass</button>
+                                <button class="btn-modern btn-outline">Outline</button>
+                                <button class="btn-modern btn-danger">Danger</button>
+                            </div>
+                        </div>
+
+                        <!-- Inputs Section -->
+                        <div class="ui-section">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Inputs</h3>
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 400px;">
+                                <div class="input-group">
+                                    <input type="text" class="input-modern" placeholder=" " id="input1">
+                                    <label for="input1" class="input-label">Floating Label</label>
+                                </div>
+                                <div class="input-group">
+                                    <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                    <input type="text" class="input-modern with-icon" placeholder="Search...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Toggles & Loaders -->
+                        <div class="ui-section">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Feedback & Controls
+                            </h3>
+                            <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;">
+                                <!-- Toggles -->
+                                <div style="display: flex; gap: 1rem; align-items: center;">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+
+                                <!-- Loaders -->
+                                <div class="loader-spinner"></div>
+                                <div class="loader-pulse"></div>
+                                <div class="loader-dots"><span></span><span></span><span></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Cards -->
+                        <div class="ui-section">
+                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Cards</h3>
+                            <div
+                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                                <!-- Glass Card -->
+                                <div class="glass-card-demo">
+                                    <div class="card-content">
+                                        <h4 class="card-title">Glassmorphism</h4>
+                                        <p class="card-text">Blurry backdrop filter with semi-transparent background.
+                                        </p>
+                                        <button class="btn-sm btn-accent" style="margin-top: 1rem;">Action</button>
+                                    </div>
+                                </div>
+                                <!-- Neo Card -->
+                                <div class="neo-card-demo">
+                                    <div class="card-content">
+                                        <h4 class="card-title">Neumorphism</h4>
+                                        <p class="card-text">Soft shadows creating depth and texture.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <script src="js/script.js?v=2"></script>
+                <script src="js/snow-effect.js"></script>
+                <script src="js/playground.js"></script>
 </body>
 
 </html>

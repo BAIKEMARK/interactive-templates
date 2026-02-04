@@ -80,18 +80,23 @@ function updateVisualContent(index) {
     const advEffects = document.getElementById('advancedEffectsWrapper');
     if (advEffects) advEffects.style.display = 'none';
 
+    // Hide UI Elements wrapper
+    const uiElements = document.getElementById('uiElementsWrapper');
+    if (uiElements) uiElements.style.display = 'none';
+
     // 根据索引显示对应视图
     // 根据索引显示对应视图
     if (index === 0 || index === 1 || index === 2) {
         // Module 0 (UI), 1 (Visual), 2 (Overlays) all use the main Game Wrapper
         if (gameWrapper) gameWrapper.style.display = 'flex';
     } else if (index === 3) {
-        const advEffects = document.getElementById('advancedEffectsWrapper');
         if (advEffects) advEffects.style.display = 'flex';
 
         // Init effects when this module is selected
         if (window.initComicViewer) window.initComicViewer();
         if (window.initTiltEffect) window.initTiltEffect();
+    } else if (index === 4) {
+        if (uiElements) uiElements.style.display = 'flex';
     }
 }
 
