@@ -71,28 +71,27 @@ function updateVisualContent(index) {
     const rulesWrapper = document.getElementById('rulesWrapper');
 
     // 先隐藏所有视图
-    gameWrapper.style.display = 'none';
-    galleryWrapper.style.display = 'none';
-    rulesWrapper.style.display = 'none';
+    // 先隐藏所有视图
+    if (gameWrapper) gameWrapper.style.display = 'none';
+    if (galleryWrapper) galleryWrapper.style.display = 'none';
+    if (rulesWrapper) rulesWrapper.style.display = 'none';
+
+    // Also hide advanced effects wrapper if it exists (for switching between modules)
+    const advEffects = document.getElementById('advancedEffectsWrapper');
+    if (advEffects) advEffects.style.display = 'none';
 
     // 根据索引显示对应视图
-    if (index === 0) {
-        gameWrapper.style.display = 'flex'; // 假设 Flex 布局
-        // 如果有游戏暂停/继续逻辑，可以在这里尝试恢复
-        if (typeof window.resumeGame === 'function') {
-            // window.resumeGame(); 
-        }
-    } else if (index === 1) {
-        galleryWrapper.style.display = 'flex';
-        // 切换到其他栏目时，通常暂停游戏以节省资源
-        if (typeof window.pauseGame === 'function') {
-            window.pauseGame();
-        }
-    } else if (index === 2) {
-        rulesWrapper.style.display = 'flex';
-        if (typeof window.pauseGame === 'function') {
-            window.pauseGame();
-        }
+    // 根据索引显示对应视图
+    if (index === 0 || index === 1 || index === 2) {
+        // Module 0 (UI), 1 (Visual), 2 (Overlays) all use the main Game Wrapper
+        if (gameWrapper) gameWrapper.style.display = 'flex';
+    } else if (index === 3) {
+        const advEffects = document.getElementById('advancedEffectsWrapper');
+        if (advEffects) advEffects.style.display = 'flex';
+
+        // Init effects when this module is selected
+        if (window.initComicViewer) window.initComicViewer();
+        if (window.initTiltEffect) window.initTiltEffect();
     }
 }
 

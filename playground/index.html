@@ -192,6 +192,42 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Module 3: Advanced Effects -->
+                    <div class="module-item" data-id="3" onclick="selectModule(3)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle inactive-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title inactive-text">高级特效 (Effects)</h2>
+                                </div>
+                                <div class="expand-icon">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        集成来自舞狮与滑雪项目的高级交互特效。
+                                    </p>
+                                    <div class="playground-btn-row">
+                                        <button class="playground-btn" onclick="selectModule(3)">查看效果演示</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -293,13 +329,113 @@
                 <div id="galleryWrapper" class="gallery-wrapper" style="display: none;">
                     <!-- Keep empty for now as focus is on module 0,1,2 driving the game view -->
                 </div>
+
+                <!-- Module 3: Advanced Effects Demo -->
+                <div id="advancedEffectsWrapper" class="effects-wrapper"
+                    style="display: none; height: 100%; overflow-y: auto;">
+                    <div class="effects-container"
+                        style="display: flex; flex-direction: column; gap: 2rem; width: 100%; max-width: 800px; padding: 2rem; padding-bottom: 4rem;">
+
+                        <!-- 1. Interactive Comic Viewer -->
+                        <div class="effect-group">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">1. 交互式漫画
+                                (Interactive Comic)</h3>
+                            <p class="effect-desc" style="color: #666; margin-bottom: 1rem;">来自舞狮项目：点击热区切换分镜，视频叠加实现动态效果。
+                            </p>
+
+                            <div class="comic-stack"
+                                style="position: relative; width: 100%; margin: 0 auto; display: flex; justify-content: center;">
+                                <div class="comic-wrapper" id="comicWrapper"
+                                    style="position: relative; height: 80vh; width: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                    <!-- Layout Driver -->
+                                    <img src="assets/rules/lion-customs-comic.png" class="comic-driver"
+                                        aria-hidden="true" alt=""
+                                        style="height: 100%; width: auto; display: block; visibility: hidden;">
+
+                                    <!-- Video Layers -->
+                                    <video id="comicVideo" class="comic-video" src="assets/rules/lion-customs-comic.mp4"
+                                        muted loop playsinline preload="auto"
+                                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover;"></video>
+                                    <video id="comicVideoAlt" class="comic-video"
+                                        src="assets/rules/lion-customs-comic-1.mp4" muted loop playsinline
+                                        preload="auto"
+                                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; opacity: 0; z-index: 1;"></video>
+
+                                    <!-- Mask Layer -->
+                                    <div id="comicImageMask" class="comic-image-mask"
+                                        style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 2;">
+                                        <img src="assets/rules/lion-customs-comic.png" alt="漫画图解"
+                                            class="comic-image-full"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+
+                                    <!-- Hotspots -->
+                                    <div class="comic-hotspots"
+                                        style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 10;">
+                                        <button class="comic-hotspot" data-panel="0"
+                                            style="position: absolute; top: 15%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                            <div class="hotspot-dot"
+                                                style="width: 8px; height: 8px; background: white; border-radius: 50%;">
+                                            </div>
+                                        </button>
+                                        <button class="comic-hotspot" data-panel="1"
+                                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                            <div class="hotspot-dot"
+                                                style="width: 8px; height: 8px; background: white; border-radius: 50%;">
+                                            </div>
+                                        </button>
+                                        <button class="comic-hotspot" data-panel="2"
+                                            style="position: absolute; top: 85%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                                            <div class="hotspot-dot"
+                                                style="width: 8px; height: 8px; background: white; border-radius: 50%;">
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Lightbox Zoom/Pan -->
+                        <div class="effect-group">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">2. 灯箱缩放 (Lightbox
+                                Zoom/Pan)</h3>
+                            <p class="effect-desc" style="color: #666; margin-bottom: 1rem;">来自滑雪项目：点击图片全屏，支持双指/滚轮缩放与拖拽。
+                            </p>
+                            <div class="rules-visual-container" id="rulesVisualContainer"
+                                onclick="window.openLightbox()"
+                                style="cursor: pointer; position: relative; display: inline-block;">
+                                <img src="assets/rules/fis-rules.png" alt="规则" class="rules-image"
+                                    style="max-height: 200px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                                <div class="click-hint"
+                                    style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">
+                                    点击全屏查看</div>
+                            </div>
+                        </div>
+
+                        <!-- 3. 3D Tilt Effect -->
+                        <div class="effect-group">
+                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">3. 3D 悬浮视差 (3D
+                                Tilt)</h3>
+                            <p class="effect-desc" style="color: #666; margin-bottom: 1rem;">来自滑雪装备库：鼠标/触摸移动产生3D透视效果。
+                            </p>
+                            <div class="gallery-stage" id="tiltStage"
+                                style="height: 300px; background: rgba(255,255,255,0.5); border-radius: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                                <div class="stage-visual" style="perspective: 1000px;">
+                                    <img id="tiltImage" src="assets/gallery/snowboard.png" alt="Snowboard"
+                                        class="gallery-image"
+                                        style="max-height: 80%; max-width: 80%; transition: transform 0.1s ease-out;">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="js/script.js?v=2"></script>
-    <script src="js/snow-effect.js"></script>
-    <script src="js/playground.js"></script>
+        <script src="js/script.js?v=2"></script>
+        <script src="js/snow-effect.js"></script>
+        <script src="js/playground.js"></script>
 </body>
 
 </html>
