@@ -1,0 +1,2002 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  /* Colors */
+  --paper-bg: #f9faff;
+  /* Cold, icy white-blue */
+  --edge-highlight: #ff6b35;
+  --edge-shadow: #e85d2a;
+  --snow-light: #fafafa;
+  --snow-shadow: #e8e8e8;
+  --character-mint: #a8e6cf;
+  --character-lavender: #c4aef2;
+  --character-peach: #ffd3b6;
+  --text-primary: #111827;
+  /* gray-900 */
+  --text-secondary: #4b5563;
+  /* gray-600 */
+  --text-muted: #6b7280;
+  /* gray-500 */
+
+  /* Fonts */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--paper-bg);
+  background-image: url('../assets/ui/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--text-primary);
+  overflow: hidden;
+  /* App container handles scroll */
+}
+
+/* App Container */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+.header-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.main-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  /* Remove bottom margin as it's handled by container */
+}
+
+/* Baike Link Badge (Premium Slate Style) */
+.baike-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background-color: rgba(243, 244, 246, 0.8);
+  /* gray-100 with slight transparency */
+  color: #374151;
+  /* gray-700 */
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(4px);
+}
+
+.baike-link:hover {
+  background-color: #e5e7eb;
+  /* gray-200 */
+  color: #111827;
+  /* gray-900 */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.link-icon-img {
+  height: 12px;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .main-title {
+    font-size: 3rem;
+    /* 48px */
+  }
+}
+
+/* Left Column: Module List */
+.module-list-container {
+  width: 100%;
+  flex: 1;
+  height: 100%;
+  /* Force height to fill container to allow scrolling */
+  overflow-y: auto;
+  z-index: 10;
+  background-color: transparent;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer Brand */
+.footer-brand {
+  /* Mobile: In document flow, below modules */
+  position: relative;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.3s;
+
+  /* No background - clean look */
+  background: transparent;
+  padding: 1rem 1.5rem;
+  margin: 0;
+  justify-content: flex-start;
+}
+
+/* Desktop: Fixed position at top-right corner */
+@media (min-width: 768px) {
+  .footer-brand {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    bottom: auto;
+    left: auto;
+    padding: 0;
+  }
+}
+
+/* Override previous media query logic if any complexity arises, but simple flex-end words well */
+
+.footer-brand:hover {
+  /* No opacity change needed since we start full opacity */
+  opacity: 1;
+}
+
+.co-build-text {
+  font-size: 0.75rem;
+  color: #000000;
+  /* Pure Black */
+  font-weight: 700;
+  /* Bold */
+  letter-spacing: 0.02em;
+}
+
+.brand-logo {
+  height: 24px;
+  width: auto;
+  filter: none;
+  /* Full color always */
+  display: block;
+  transition: transform 0.3s;
+}
+
+.footer-brand:hover .brand-logo {
+  transform: scale(1.05);
+}
+
+
+
+/* Scrollbar Hide */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.content-wrapper {
+  max-width: 36rem;
+  /* 576px */
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Module Item */
+.module-item {
+  border-radius: 1.5rem;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  cursor: pointer;
+  transform: scale(0.98);
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.4);
+  /* Slightly better contrast */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  /* Add subtle border */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  /* Very subtle shadow for depth */
+  /* gray-50 */
+}
+
+.module-item:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px) scale(0.99);
+  /* Slight lift */
+  opacity: 1;
+}
+
+.module-item.active {
+  background-color: #ffffff;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: scale(1);
+  opacity: 1;
+  cursor: default;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.module-card {
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .module-card {
+    padding: 2rem;
+  }
+}
+
+/* Header */
+.module-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.icon-circle.active-bg {
+  background-color: #000;
+  color: #fff;
+}
+
+.icon-circle.inactive-bg {
+  background-color: #e5e7eb;
+  /* gray-200 */
+  color: #6b7280;
+  /* gray-500 */
+}
+
+/* Hover effect for inactive icon */
+.module-item:not(.active):hover .icon-circle.inactive-bg {
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.icon-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-xs {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+
+.module-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.active-text {
+  color: var(--text-primary);
+}
+
+.inactive-text {
+  color: #6b7280;
+}
+
+.expand-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 1px solid #d1d5db;
+  /* gray-300 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  /* gray-400 */
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Content */
+.module-content-wrapper {
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.module-content {
+  padding-top: 1.5rem;
+}
+
+.description {
+  color: var(--text-secondary);
+  line-height: 1.625;
+  margin-bottom: 1.5rem;
+}
+
+.text-dark {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Stats Grid (Module 0) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  position: relative;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 1.25rem;
+  border: 2px solid #f3f4f6;
+  /* Default border */
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Active State for Angle Card */
+.stat-card.active-card {
+  border-color: #ff6b35;
+  box-shadow: 0 10px 30px -10px rgba(255, 107, 53, 0.4);
+}
+
+.stat-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ff6b35;
+  background: rgba(255, 107, 53, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  animation: fadeIn 0.3s;
+}
+
+.stat-badge .dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  background-color: #ff6b35;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.stat-content {
+  position: relative;
+  z-index: 2;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.stat-value-wrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.stat-value {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s;
+}
+
+.stat-card.active-card .stat-value {
+  color: #ff6b35;
+}
+
+.unit {
+  font-size: 1.25rem;
+  color: #9ca3af;
+  margin-left: 0.25rem;
+  font-weight: 500;
+}
+
+.stat-value-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.1;
+}
+
+/* Background Decoration */
+.stat-bg-circle {
+  position: absolute;
+  right: -1rem;
+  bottom: -1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff7ed 0%, rgba(255, 255, 255, 0) 70%);
+  opacity: 0.8;
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 0.5s ease;
+}
+
+.stat-card.active-card .stat-bg-circle {
+  transform: scale(1.5);
+  background: radial-gradient(circle, #fff7ed 0%, rgba(255, 107, 53, 0.1) 70%);
+}
+
+.tip-box {
+  font-size: 0.875rem;
+  color: #6b7280;
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f3f4f6;
+  line-height: 1.5;
+}
+
+/* Parts List (Module 1) */
+.parts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.part-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.part-item:hover {
+  background-color: #f9fafb;
+}
+
+.part-indicator {
+  width: 0.5rem;
+  height: 2rem;
+  border-radius: 9999px;
+}
+
+.part-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.part-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Rules List (Module 2) */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rule-card {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border-left-width: 4px;
+  border-left-style: solid;
+  background-color: #fff;
+  border-color: #e5e7eb;
+  /* Default border */
+}
+
+.rule-card:hover {
+  background-color: #f9fafb;
+}
+
+.rule-orange {
+  border-left-color: var(--edge-highlight);
+  background-color: #fff7ed;
+}
+
+.rule-green {
+  border-left-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+.rule-purple {
+  border-left-color: #a855f7;
+  background-color: #faf5ff;
+}
+
+.rule-header {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.rule-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Rules Visual Container */
+.rules-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rules-visual-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.rules-image {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.rules-image:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.rules-image.zoomed {
+  transform: scale(1.5);
+}
+
+/* ========== Interactive Comic Viewer (Stacked Layers) ========== */
+/* ========== Interactive Comic Viewer (Stacked Layers) ========== */
+/* 
+   Strategy: use an invisible "Driver" image to set the aspect ratio and size of the container.
+   Everything else is absolutely positioned to match it exactly.
+*/
+.comic-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comic-wrapper {
+  position: relative;
+  /* Max dimensions constrained by view */
+  max-width: 95%;
+  max-height: 95%;
+  display: inline-block;
+  /* Wraps the driver image */
+  line-height: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  /* Apply radius to container */
+  overflow: hidden;
+  /* Clip corners */
+}
+
+/* Driver Image: Invisible but sets the size */
+.comic-driver {
+  display: block;
+
+  /* Desktop: Increased by 1/3 per user request (60vh * 1.33 ≈ 80vh) */
+  height: 80vh;
+  width: auto;
+
+  max-width: 100%;
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mobile height override (if needed) handled by media query on visual-container, 
+   but here we might need max-height: 100% of parent comic-stack */
+.comic-stack .comic-driver {
+  max-height: 100%;
+  /* inherit constraint from stack */
+}
+
+/* Layers: All Absolute, Top Left, Full Size */
+.comic-video,
+.comic-image-mask,
+.comic-hotspots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Video Layer - Base */
+.comic-video {
+  /* object-fit: fill ensures it stretches to exact image dimensions even if slightly off */
+  object-fit: fill;
+  z-index: 1;
+  background: white;
+  /* Prevent transparent gaps */
+}
+
+/* Image Mask Layer - On top of video */
+.comic-image-mask {
+  z-index: 2;
+  /* Removed transition for instant reveal ("Direct Disappear") per user request */
+  /* transition: clip-path 0.4s cubic-bezier(0.32, 0.72, 0, 1); */
+  overflow: hidden;
+  /* Ensure image fits */
+}
+
+.comic-image-full {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  /* Stretch to match driver */
+  display: block;
+}
+
+/* Hotspots Layer */
+.comic-hotspots {
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+  pointer-events: none;
+}
+
+
+
+.comic-hotspot {
+  flex: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* Remove hover background */
+.comic-hotspot:hover {
+  background: transparent;
+}
+
+/* Dot Styles */
+.hotspot-dot {
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pulse Animation */
+.hotspot-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1rem;
+  height: 1rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  z-index: 1;
+  animation: ripple 2s infinite;
+}
+
+@keyframes ripple {
+  0% {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.8;
+  }
+
+  100% {
+    width: 3rem;
+    height: 3rem;
+    opacity: 0;
+  }
+}
+
+/* Hover Interaction */
+.comic-hotspot:hover .hotspot-dot {
+  transform: scale(1.5);
+}
+
+.comic-hotspot:hover .hotspot-ripple {
+  animation-duration: 1s;
+  /* Faster pulse on hover */
+}
+
+/* Active State (Playing) - Hide controls */
+.comic-hotspot.active .hotspot-dot,
+.comic-hotspot.active .hotspot-ripple {
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+
+
+
+.hotspot-hint {
+  font-size: 0.75rem;
+  color: #666;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Right Column: Visual Container */
+.visual-container {
+  display: flex;
+  width: 100%;
+  height: 40vh;
+  flex-shrink: 0;
+  background-color: transparent;
+  /* Transparent to show body bg */
+  /* Show on bottom (default order) */
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  /* Add a top shadow to separate from list */
+  box-shadow: none;
+  /* Removed shadow */
+  z-index: 20;
+
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: height;
+}
+
+/* Bottom Sheet States (Mobile Only) */
+@media (max-width: 767px) {
+  .visual-container {
+    height: 60vh;
+    /* Full Mode */
+  }
+
+  .visual-container.minimized {
+    height: 120px;
+    /* Mini Mode */
+  }
+
+  /* Hide/Compact elements in Mini Mode */
+  .visual-container.minimized .game-footer {
+    display: none;
+  }
+
+  .visual-container.minimized .game-hud {
+    transform: scale(0.8);
+    top: 0;
+    left: 0;
+    padding: 0.25rem;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+  }
+
+  .visual-container.minimized .pause-btn {
+    top: 0.5rem;
+    right: 3rem;
+    /* Move left of toggle button */
+    transform: scale(0.8);
+  }
+
+  /* Gallery in Minimized Mode */
+  .visual-container.minimized .gallery-wrapper {
+    padding: 0.5rem;
+  }
+
+  .visual-container.minimized .gallery-stage {
+    padding: 0.5rem;
+  }
+
+  .visual-container.minimized .stage-visual {
+    min-height: 60px;
+    height: 100%;
+  }
+
+  .visual-container.minimized .gallery-image {
+    max-height: 80px;
+    max-width: 80%;
+    object-fit: contain;
+  }
+
+  .visual-container.minimized .stage-info {
+    display: none;
+    /* Hide text in mini mode */
+  }
+}
+
+/* Drag Handle */
+.resize-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  z-index: 30;
+  /* Touch target */
+}
+
+.resize-handle::after {
+  content: '';
+  width: 40px;
+  height: 4px;
+  background-color: #d1d5db;
+  border-radius: 2px;
+}
+
+/* Toggle Button */
+.toggle-size-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 35;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.toggle-size-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+#visual-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#visual-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 25px -5px rgba(0, 0, 0, 0.1));
+  transition: opacity 0.3s ease;
+}
+
+.mobile-hint {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  #app {
+    flex-direction: row;
+  }
+
+  .module-list-container {
+    width: 50%;
+    /* On desktop, keep footer at bottom of this container */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Ensure content wrapper doesn't take full height so footer pushes down properly, 
+     BUT we need scrolling. So actually:
+     Top part (Content) -> Grow
+     Bottom part (Footer) -> Fixed
+  */
+
+  .content-wrapper {
+    flex: 1;
+    /* Allow content to take space */
+    padding-bottom: 1rem;
+  }
+
+  .footer-brand {
+    padding-bottom: 2rem;
+    justify-content: flex-start;
+    /* Left align on desktop */
+  }
+
+  .visual-container {
+    display: block;
+    width: 50%;
+    height: 100%;
+    order: 0;
+    /* Reset order */
+    /* Transparent Background for seamless look */
+    background: transparent;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Remove any mobile shadow on desktop */
+    box-shadow: none;
+    /* Ensure no borders causing separation */
+    border: none;
+  }
+
+  /* Reset Mini Mode styles for Desktop */
+  .visual-container.minimized {
+    height: 100%;
+  }
+
+  .resize-handle,
+  .toggle-size-btn {
+    display: none;
+  }
+
+  #visual-content {
+    padding: 2rem;
+  }
+
+  #visual-image {
+    max-height: 80vh;
+  }
+}
+
+/* Animation utilities */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Game Styles */
+#gameWrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
+  display: none;
+  /* Hidden by default until Simulator is active */
+}
+
+.game-title {
+  display: none;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #37352F;
+}
+
+@media (min-width: 768px) {
+  .game-title {
+    display: block;
+  }
+}
+
+#gameContainer {
+  position: relative;
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  background-color: white;
+}
+
+.game-hud {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f4f6;
+  pointer-events: none;
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .game-hud {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+    gap: 0.5rem;
+    top: 0.5rem;
+    left: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.game-hud .font-bold {
+  font-weight: 700;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+
+.text-orange-600 {
+  color: #ea580c;
+}
+
+#pauseOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.pause-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 25;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #f3f4f6;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.pause-btn:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+
+.pause-btn:active {
+  transform: scale(0.95);
+}
+
+#pauseOverlay.hidden {
+  display: none;
+}
+
+.pause-card {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.5rem;
+  border-radius: 0.375rem;
+  text-align: center;
+}
+
+.pause-title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.pause-subtitle {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #9ca3af;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+#inactiveOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 20;
+  /* pointer-events: none; REMOVE this so we can select/read if needed, but click passes through via JS logic usually? Actually for start overlay we want it clickable */
+  cursor: pointer;
+  transition: opacity 300ms;
+}
+
+#inactiveOverlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.control-guide-card {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.guide-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.guide-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.guide-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.inputs-row {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.key-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.key-group span {
+  font-size: 0.75rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.key-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-family: monospace;
+  box-shadow: 0 2px 0 #d1d5db;
+}
+
+.dual-keys {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* Mobile Zone Guide */
+.mobile-zone-guide {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: #f9fafb;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px dashed #e5e7eb;
+}
+
+.zone-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Center horizontally */
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #374151;
+  width: 100%;
+  /* Ensure it spans full width to center effectively */
+}
+
+.zone-icon {
+  font-size: 1.25rem;
+}
+
+.zone-top,
+.zone-btm {
+  opacity: 0.7;
+}
+
+.zone-mid {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Utility for responsive display */
+.hidden-mobile {
+  display: block;
+}
+
+.hidden-desktop {
+  display: none;
+}
+
+/* Mobile Override */
+@media (max-width: 768px) {
+  .hidden-mobile {
+    display: none;
+  }
+
+  .hidden-desktop {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Typography Adjustments */
+  body {
+    font-size: 15px;
+  }
+
+  .module-title {
+    font-size: 1.25rem;
+  }
+
+  .description {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .stat-value {
+    font-size: 2.75rem;
+  }
+
+  .stat-value-text {
+    font-size: 1.5rem;
+  }
+
+  .stage-title {
+    font-size: 1.5rem;
+  }
+
+  .stage-desc {
+    font-size: 0.9rem;
+  }
+
+  .control-guide-card {
+    padding: 0.5rem 1rem;
+    /* Even more compact padding */
+    width: 80%;
+    max-width: 280px;
+    margin-top: 2rem;
+    /* Push down slightly to avoid pause/history buttons overlap */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center children including .mobile-zone-guide */
+  }
+
+  .guide-title {
+    font-size: 1.1rem;
+    /* Slightly smaller title */
+    margin-bottom: 0.5rem;
+  }
+
+  .guide-section {
+    gap: 0.5rem;
+    /* Tighter gap */
+    width: 100%;
+    /* Ensure section takes full width for centering context */
+    display: flex;
+    /* Enforce flex */
+    align-items: center;
+    /* Center items inside */
+  }
+
+  .mobile-zone-guide {
+    gap: 0.25rem;
+    /* Tighter internal gap */
+    padding: 0.5rem;
+    /* Smaller padding */
+    width: 100%;
+    /* Full width within parent padding */
+  }
+
+  /* Rules Viewer Mobile Adjustments */
+  .comic-driver {
+    /* Mobile: Ensure full image fits without cropping or distortion */
+    /* Use max constraints instead of fixed width */
+    width: auto !important;
+    height: auto !important;
+    max-width: 95%;
+    /* Fit width */
+    max-height: 60vh;
+    /* Fit height */
+    margin: 0 auto;
+    /* Center it */
+  }
+
+  .hotspot-label {
+    font-size: 1rem;
+    /* Smaller text on mobile */
+  }
+
+  .click-hint {
+    font-size: 0.75rem;
+    bottom: 16px;
+  }
+}
+
+
+/* Specific adjustments for Mini Mode overlay */
+@media (max-width: 767px) {
+  .visual-container.minimized .control-guide-card {
+    padding: 0.75rem 1.5rem;
+    width: auto;
+    max-width: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Hide detailed guide in mini mode to prevent cutoff */
+  .visual-container.minimized .guide-section {
+    display: none;
+  }
+
+  .visual-container.minimized .guide-title {
+    margin-bottom: 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Add a play icon hint */
+  .visual-container.minimized .guide-title::before {
+    content: '▶';
+    font-size: 0.8rem;
+    color: #ff6b35;
+  }
+
+  /* MINIMIZED MODE: Force Content Scaling */
+  /* Ensure the comic/video shrinks to fit the tiny 120px strip */
+  .visual-container.minimized .comic-stack,
+  .visual-container.minimized .rules-visual-container {
+    height: 100%;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .visual-container.minimized .comic-wrapper {
+    box-shadow: none;
+    /* simpler look */
+    max-height: 90%;
+    /* slight padding */
+  }
+
+  .visual-container.minimized .comic-driver {
+    max-height: 100px !important;
+    /* Force small height to fit 120px strip */
+    width: auto !important;
+    /* Maintain aspect ratio */
+  }
+}
+
+#gameCanvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.game-footer {
+  margin-top: auto;
+  padding: 0.35rem 0.75rem;
+  /* Minimal padding */
+  text-align: center;
+  font-size: 0.8rem;
+  color: #000000;
+  /* Pure Black */
+  font-weight: 600;
+  /* Medium-Bold for better visibility */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Compact Glassmorphism - just covers text */
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 0.5rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
+}
+
+/* 
+   Interactive Gallery Styles 
+   (Module 1 Showcase - Split View)
+*/
+
+/* Left Column: Equipment Selector List */
+.eq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.eq-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.eq-item:hover {
+  background-color: #f9fafb;
+  transform: translateX(4px);
+}
+
+.eq-item.active {
+  background-color: #fff;
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.eq-lat {
+  width: 0.35rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  transition: background-color 0.3s;
+}
+
+.eq-item.active .eq-lat {
+  background-color: var(--text-primary);
+}
+
+.eq-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.eq-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+
+/* Right Column: Gallery Stage Wrapper */
+.gallery-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  /* Changed from #fff to transparent */
+  /* or transparent if you want site bg */
+}
+
+/* Reusing stage styles but adapting for full container */
+.gallery-stage {
+  position: relative;
+  /* Remove old card styles */
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-visual {
+  flex: 1;
+  /* Take available space */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  min-height: 200px;
+  /* Min height insurance */
+}
+
+.gallery-image {
+  max-height: 80%;
+  /* Don't overflow */
+  max-width: 90%;
+  object-fit: contain;
+  /* Remove white background using Multiply blend mode */
+  mix-blend-mode: multiply;
+  /* Remove shadow since it might look weird with multiply, or keep it if it simulates ground shadow */
+  /* filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2)); */
+  transition: transform 0.1s ease-out, opacity 0.3s;
+}
+
+.stage-info {
+  margin-top: auto;
+  padding: 1.5rem;
+  /* Increased padding */
+  text-align: center;
+  z-index: 10;
+  /* Glassmorphism Card Style */
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  /* Ensure bottom spacing */
+  max-width: 90%;
+  /* prevent full width touching edges */
+}
+
+.stage-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  /* Reduced from 800 to 700 to avoid "Impact" look */
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Enforce clean sans */
+  color: #111827;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+  /* Tighter Apple-style spacing */
+}
+
+.stage-desc {
+  font-size: 1rem;
+  color: #6b7280;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Game Header & Title */
+.game-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.game-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Desktop: larger title */
+@media (min-width: 768px) {
+  .game-title {
+    font-size: 1.75rem;
+  }
+
+  .game-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* =========================================
+   LIGHTBOX / FULLSCREEN STYLES
+   ========================================= */
+
+.click-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+#rulesVisualContainer:hover .click-hint {
+  opacity: 1;
+}
+
+#rulesVisualContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* OVERRIDE: Allow container to grow to fit full Comic size */
+  height: auto !important;
+  min-height: 100%;
+  overflow: visible !important;
+}
+
+.rules-image {
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+.rules-image:hover {
+  transform: scale(1.02);
+}
+
+/* Lightbox Overlay */
+/* Record Button */
+.record-btn {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  /* Left of pause button */
+  z-index: 25;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #f3f4f6;
+  color: #d97706;
+  /* amber-600 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.record-btn:hover {
+  background-color: #fff;
+  transform: scale(1.05);
+}
+
+.record-btn:active {
+  transform: scale(0.95);
+}
+
+/* History Modal */
+#historyOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  /* Higher than pause overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+#historyOverlay.hidden {
+  display: none;
+}
+
+.history-card {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 320px;
+  position: relative;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.history-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.history-close-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: color 0.2s;
+}
+
+.history-close-btn:hover {
+  color: #4b5563;
+  background-color: #f3f4f6;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.history-item.is-record {
+  background-color: #fff7ed;
+  /* orange-50 */
+  border: 1px solid #ffedd5;
+}
+
+.history-rank {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #9ca3af;
+  width: 1.5rem;
+}
+
+.history-date {
+  color: #6b7280;
+  font-size: 0.75rem;
+  flex: 1;
+}
+
+.history-score {
+  font-weight: 700;
+  color: #374151;
+}
+
+.history-item.is-record .history-score {
+  color: #d97706;
+}
+
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #1f2937;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: all 0.2s;
+}
+
+.lightbox-close:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.1);
+}
+
+.lightbox-image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+}
+
+.lightbox-image-container:active {
+  cursor: grabbing;
+}
+
+#lightboxImage {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  transition: transform 0.1s linear;
+  /* Fast response for pan/zoom */
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.lightbox-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  pointer-events: none;
+  animation: fadeInOutLightbox 4s forwards 1s;
+  opacity: 0;
+}
+
+@keyframes fadeInOutLightbox {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

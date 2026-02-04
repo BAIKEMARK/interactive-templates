@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Playground</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Playground specific overrides */
+        .playground-btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .playground-btn {
+            padding: 8px 16px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .playground-btn:hover {
+            border-color: #000;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Left Column: UI Accordion -->
+        <div class="module-list-container scrollbar-hide">
+            <div class="content-wrapper">
+                <div class="header-section">
+                    <h1 class="main-title">开发者操场</h1>
+                    <a href="#" class="baike-link">
+                        <img src="assets/ui/baidu.png" alt="Baidu" class="link-icon-img">
+                        说明书 & 零件库
+                    </a>
+                </div>
+
+                <div class="accordion" id="accordion">
+                    <!-- Module 0: UI Components -->
+                    <div class="module-item active" data-id="0" onclick="selectModule(0)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle active-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title active-text">UI 组件库</h2>
+                                </div>
+                                <div class="expand-icon hidden">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: auto; opacity: 1;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        Master Bundle 内置的基础 UI 组件。
+                                    </p>
+
+                                    <h3 class="text-sm font-bold mt-4 mb-2">状态卡片 (Stat Cards)</h3>
+                                    <div class="stats-grid">
+                                        <div class="stat-card">
+                                            <div class="stat-badge"><span class="dot"></span> ACTIVE</div>
+                                            <div class="stat-content">
+                                                <div class="stat-label">活跃卡片</div>
+                                                <div class="stat-value-wrapper"><span class="stat-value">100</span>
+                                                </div>
+                                            </div>
+                                            <div class="stat-bg-circle"></div>
+                                        </div>
+                                        <div class="stat-card">
+                                            <div class="stat-content">
+                                                <div class="stat-label">普通卡片</div>
+                                                <div class="stat-value-text">Text</div>
+                                            </div>
+                                            <div class="stat-bg-circle"></div>
+                                        </div>
+                                    </div>
+
+                                    <h3 class="text-sm font-bold mt-4 mb-2">规则卡片 (Rule Cards)</h3>
+                                    <div class="rules-list">
+                                        <div class="rule-card rule-orange">
+                                            <div class="rule-header">橙色主题</div>
+                                            <p class="rule-desc">用于强调或警告。</p>
+                                        </div>
+                                        <div class="rule-card rule-green">
+                                            <div class="rule-header">绿色主题</div>
+                                            <p class="rule-desc">用于表示通过、安全或成功。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 1: Visual Effects -->
+                    <div class="module-item" data-id="1" onclick="selectModule(1)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle inactive-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title inactive-text">视觉特效</h2>
+                                </div>
+                                <div class="expand-icon">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        点击下方按钮，在右侧画布预览特效。
+                                    </p>
+                                    <div class="playground-btn-row">
+                                        <button class="playground-btn" onclick="toggleSnow(true)">开启下雪 (Snow)</button>
+                                        <button class="playground-btn" onclick="toggleSnow(false)">关闭下雪</button>
+                                    </div>
+                                    <div class="playground-btn-row">
+                                        <button class="playground-btn" onclick="changeBgColor('#f3f4f6')">默认背景</button>
+                                        <button class="playground-btn" onclick="changeBgColor('#E0F2FE')">冰雪蓝背景</button>
+                                        <button class="playground-btn" onclick="changeBgColor('#1a1a1a')">暗色背景</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 2: Overlays -->
+                    <div class="module-item" data-id="2" onclick="selectModule(2)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle inactive-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title inactive-text">弹窗与交互</h2>
+                                </div>
+                                <div class="expand-icon">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        测试内置的全屏弹窗和遮罩层。
+                                    </p>
+                                    <div class="playground-btn-row">
+                                        <button class="playground-btn" onclick="showOverlay('inactiveOverlay')">开始引导
+                                            (Start)</button>
+                                        <button class="playground-btn" onclick="showOverlay('pauseOverlay')">暂停遮罩
+                                            (Pause)</button>
+                                        <button class="playground-btn" onclick="showOverlay('historyOverlay')">历史记录
+                                            (History)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-brand">
+                <span class="co-build-text">内容共建</span>
+                <img src="assets/ui/datawhale-logo.png" alt="Datawhale" class="brand-logo">
+            </div>
+        </div>
+
+        <!-- Right Column: Visual -->
+        <div class="visual-container minimized" id="visualContainer">
+            <div class="resize-handle"></div>
+            <button class="toggle-size-btn" id="toggleSizeBtn">
+                <svg class="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                </svg>
+                <svg class="icon-collapse hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="visual-content">
+
+                <!-- Game Wrapper (Used for Preview) -->
+                <div id="gameWrapper">
+                    <div class="game-header">
+                        <h1 class="game-title">效果预览区</h1>
+                        <p class="game-subtitle">所有特效和UI元素将在此处展示</p>
+                    </div>
+                    <div id="gameContainer">
+                        <!-- HUD Preview -->
+                        <div class="game-hud">
+                            <div>Score: <span class="font-bold">1280</span></div>
+                            <div>Speed: <span class="font-bold text-green-500">12km/h</span></div>
+                        </div>
+
+                        <!-- Buttons Preview -->
+                        <button id="recordBtn" class="record-btn" onclick="showOverlay('historyOverlay')">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                <path d="M4 22h16"></path>
+                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                            </svg>
+                        </button>
+                        <button id="visualPauseBtn" class="pause-btn" onclick="showOverlay('pauseOverlay')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="6" y="4" width="4" height="16"></rect>
+                                <rect x="14" y="4" width="4" height="16"></rect>
+                            </svg>
+                        </button>
+
+                        <!-- Overlays -->
+                        <div id="historyOverlay" class="hidden">
+                            <div class="history-card">
+                                <div class="history-header">
+                                    <div class="history-title">历史最佳记录</div>
+                                    <button class="history-close-btn" onclick="hideAllOverlays()"><svg width="20"
+                                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg></button>
+                                </div>
+                                <div class="history-list">
+                                    <div class="history-item"><span
+                                            class="history-rank">1</span><span>2023-10-01</span><span>9999</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pauseOverlay" class="hidden" onclick="hideAllOverlays()">
+                            <div class="pause-card">
+                                <div class="pause-title">暂停中</div>
+                                <div class="pause-subtitle">点击继续</div>
+                            </div>
+                        </div>
+
+                        <div id="inactiveOverlay" class="hidden" onclick="hideAllOverlays()">
+                            <div class="control-guide-card">
+                                <div class="guide-title">开始游戏</div>
+                                <div class="guide-section">
+                                    <div class="inputs-row">
+                                        <div class="key-group"><span>点击任意处开始</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <canvas id="gameCanvas" width="800" height="450"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gallery Wrapper -->
+                <div id="galleryWrapper" class="gallery-wrapper" style="display: none;">
+                    <!-- Keep empty for now as focus is on module 0,1,2 driving the game view -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js?v=2"></script>
+    <script src="js/snow-effect.js"></script>
+    <script src="js/playground.js"></script>
+</body>
+
+</html>

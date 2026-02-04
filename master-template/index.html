@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Template</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Left Column: UI Accordion -->
+        <div class="module-list-container scrollbar-hide">
+            <div class="content-wrapper">
+                <div class="header-section">
+                    <h1 class="main-title">项目标题</h1>
+                    <a href="#" target="_blank" class="baike-link">
+                        <img src="assets/ui/baidu.png" alt="Baidu" class="link-icon-img">
+                        查看百度百科详情
+                    </a>
+                </div>
+
+                <div class="accordion" id="accordion">
+                    <!-- Module 0: Core Gameplay -->
+                    <div class="module-item active" data-id="0" onclick="selectModule(0)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle active-bg">
+                                        <!-- Keep generic icons or SVGs -->
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title active-text">核心玩法</h2>
+                                </div>
+                                <div class="expand-icon hidden">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: auto; opacity: 1;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        在这里描述您的核心玩法。例如：控制<strong class="text-dark">角色</strong>
+                                        完成挑战！保持平衡，夺取高分。
+                                    </p>
+
+                                    <div class="stats-grid">
+                                        <!-- Stat Card 1 -->
+                                        <div class="stat-card" id="card-stat1">
+                                            <div class="stat-badge hidden" id="badge-active">
+                                                <span class="dot"></span> ACTIVE
+                                            </div>
+                                            <div class="stat-content">
+                                                <div class="stat-label">核心指标</div>
+                                                <div class="stat-value-wrapper">
+                                                    <span class="stat-value" id="val-stat1">0</span>
+                                                    <span class="unit">单位</span>
+                                                </div>
+                                            </div>
+                                            <div class="stat-bg-circle"></div>
+                                        </div>
+
+                                        <!-- Stat Card 2 -->
+                                        <div class="stat-card" id="card-status">
+                                            <div class="stat-content">
+                                                <div class="stat-label">当前状态</div>
+                                                <div class="stat-value-text" id="val-status">准备</div>
+                                            </div>
+                                            <div class="stat-bg-circle"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tip-box">
+                                        提示：在这里写下针对新手的关键提示或操作技巧。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 1: Gallery/Collection -->
+                    <div class="module-item" data-id="1" onclick="selectModule(1)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle inactive-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 21v-8a2 2 0 012-2h14a2 2 0 012 2v8M12 11V3m0 0L7 8m5-5l5 5" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title inactive-text">展示图鉴</h2>
+                                </div>
+                                <div class="expand-icon">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        介绍不同的角色、装备或道具。点击下方列表查看详情。
+                                    </p>
+
+                                    <!-- List: Populated by JS -->
+                                    <div class="eq-list" id="galleryList">
+                                        <!-- JS will populate this -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module 2: Rules/Guide -->
+                    <div class="module-item" data-id="2" onclick="selectModule(2)">
+                        <div class="module-card">
+                            <div class="module-header">
+                                <div class="header-left">
+                                    <div class="icon-circle inactive-bg">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                        </svg>
+                                    </div>
+                                    <h2 class="module-title inactive-text">规则说明</h2>
+                                </div>
+                                <div class="expand-icon">
+                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
+                                <div class="module-content">
+                                    <p class="description">
+                                        介绍核心规则或文化背景。
+                                    </p>
+                                    <div class="rules-list">
+                                        <div class="rule-card rule-orange">
+                                            <div class="rule-header">
+                                                <svg class="icon-xs" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                规则一
+                                            </div>
+                                            <p class="rule-desc">描述规则一的细节。</p>
+                                        </div>
+                                        <div class="rule-card rule-green">
+                                            <div class="rule-header">
+                                                <svg class="icon-xs" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                                规则二
+                                            </div>
+                                            <p class="rule-desc">描述规则二的细节。</p>
+                                        </div>
+                                        <div class="rule-card rule-purple">
+                                            <div class="rule-header">
+                                                <svg class="icon-xs" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                </svg>
+                                                规则三
+                                            </div>
+                                            <p class="rule-desc">描述规则三的细节。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer Brand -->
+            <div class="footer-brand">
+                <span class="co-build-text">内容共建</span>
+                <img src="assets/ui/datawhale-logo.png" alt="Datawhale" class="brand-logo">
+            </div>
+        </div>
+
+        <!-- Right Column: Visual -->
+        <div class="visual-container minimized" id="visualContainer">
+            <div class="resize-handle"></div>
+            <button class="toggle-size-btn" id="toggleSizeBtn" aria-label="Toggle Size">
+                <svg class="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+                </svg>
+                <svg class="icon-collapse hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="visual-content">
+
+                <!-- Game Wrapper -->
+                <div id="gameWrapper">
+                    <div class="game-header">
+                        <h1 class="game-title">游戏/场景标题</h1>
+                        <p class="game-subtitle">一句话副标题</p>
+                    </div>
+                    <div id="gameContainer">
+                        <div class="game-hud">
+                            <div>指标1: <span id="scoreDisplay" class="font-bold">0</span></div>
+                            <div>指标2: <span id="speedDisplay" class="font-bold text-green-500">0</span></div>
+                            <div>指标3: <span id="styleDisplay" class="font-bold text-orange-600">正常</span></div>
+                        </div>
+                        <button id="recordBtn" class="record-btn" aria-label="历史记录">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                <path d="M4 22h16"></path>
+                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                            </svg>
+                        </button>
+
+                        <div id="historyOverlay" class="hidden">
+                            <div class="history-card">
+                                <div class="history-header">
+                                    <div class="history-title">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="text-orange-600">
+                                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                            <path d="M4 22h16"></path>
+                                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22">
+                                            </path>
+                                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                                        </svg>
+                                        历史最佳记录
+                                    </div>
+                                    <button class="history-close-btn" id="historyCloseBtn">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="history-list" id="historyList">
+                                    <div class="history-item">
+                                        <span class="history-rank">1</span>
+                                        <span class="history-date">--/-- --:--</span>
+                                        <span class="history-score">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="visualPauseBtn" class="pause-btn" aria-label="暂停">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="6" y="4" width="4" height="16"></rect>
+                                <rect x="14" y="4" width="4" height="16"></rect>
+                            </svg>
+                        </button>
+                        <div id="pauseOverlay" class="hidden">
+                            <div class="pause-card">
+                                <div class="pause-title">暂停中</div>
+                                <div class="pause-subtitle">点击屏幕或按 空格键 继续</div>
+                            </div>
+                        </div>
+                        <div id="inactiveOverlay">
+                            <div class="control-guide-card">
+                                <div class="guide-title">点击开始游戏</div>
+
+                                <div class="guide-section">
+                                    <div class="guide-label">操作指南</div>
+
+                                    <div class="inputs-row">
+                                        <div class="key-group">
+                                            <div class="key-icon"
+                                                style="width: auto; padding: 0 12px; font-size: 0.9em;">鼠标左键 / 空格</div>
+                                            <span>操作描述</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <canvas id="gameCanvas" width="800" height="450"></canvas>
+                    </div>
+                    <p class="game-footer">底部提示信息</p>
+                </div>
+
+                <!-- Gallery Wrapper -->
+                <div id="galleryWrapper" class="gallery-wrapper" style="display: none;">
+                    <div class="gallery-stage">
+                        <div class="stage-visual">
+                            <div
+                                style="width: 100%; height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999;">
+                                展示图片区域
+                            </div>
+                            <img id="galleryImage" src="" alt="Gallery Item" class="gallery-image"
+                                style="display:none;">
+                        </div>
+                        <div class="stage-info">
+                            <h3 id="galleryTitle" class="stage-title">标题</h3>
+                            <p id="galleryDesc" class="stage-desc">描述内容</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rules Wrapper -->
+                <div id="rulesWrapper" class="rules-wrapper" style="display: none;">
+                    <div class="rules-visual-container" id="rulesVisualContainer">
+                        <div
+                            style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #fff;">
+                            此处放置规则说明图解或视频
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mobile-hint">
+        <p>请在大屏幕上查看</p>
+    </div>
+    <script src="js/script.js?v=2"></script>
+    <script src="js/game.js?v=2"></script>
+    <script src="js/gallery.js?v=2"></script>
+</body>
+
+</html>
