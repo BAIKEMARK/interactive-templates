@@ -152,3 +152,58 @@ my-new-topic/
 3.  **注入** 您的特定游戏代码到 `js/game.js`。
 4.  **填充** `index.html` 插槽中的项目特定文本和图片。
 5.  **验证** `js/script.js` 中是否正确调用了 `initGame()`。
+
+---
+
+## 💻 开发接口 (For AI & Developers)
+
+为了方便 AI 快速集成游戏逻辑，模板在 `js/game.js` 中暴露了全局对象 `window.GameUI`，可直接调用以更新界面。
+
+### 1. 更新 UI 指标
+使用 `window.GameUI` 对象更新左侧面板和游戏 HUD。
+
+| 方法 | 描述 | 示例 |
+| :--- | :--- | :--- |
+| `updateScore(value)` | 更新游戏顶部的分数显示 | `GameUI.updateScore(100)` |
+| `updateSpeed(value)` | 更新游戏顶部的速度/副指标 | `GameUI.updateSpeed('50 km/h')` |
+| `updateStyle(text)` | 更新游戏顶部的风格/状态 | `GameUI.updateStyle('完美')` |
+| `updateLeftStat1(val, unit)` | 更新左侧面板核心大数字 | `GameUI.updateLeftStat1(99, '分')` |
+| `updateLeftStatus(text)` | 更新左侧面板当前状态文本 | `GameUI.updateLeftStatus('游戏结束')` |
+
+### 2. 游戏控制与功能
+模板内置了以下功能的 UI 逻辑，无需手动实现 DOM 操作：
+
+*   **暂停功能**:
+    *   **自动绑定**: `#visualPauseBtn` (右上角暂停按钮) 点击会自动切换 `isPaused` 变量并显示 `#pauseOverlay`。
+    *   **手动调用**: 可调用 `window.pauseGame()` 来触发暂停。
+    *   **开发注意**: 在你的 `gameLoop` 中检查 `if (isPaused) return;`。
+
+*   **历史记录**:
+    *   **自动绑定**: `#recordBtn` (历史记录按钮) 点击会读取 `localStorage` 并显示浮层。
+    *   **保存记录**: 游戏结束时，调用 `GameUI.saveRecord(score)` 即可自动保存分数到本地存储并更新列表。
+
+*   **新手引导**:
+    *   `#inactiveOverlay` 是游戏开始前的遮罩。点击它会自动调用 `startGame()` 并隐藏自己。确保你的初始化逻辑在 `startGame()` 中被触发（或将 `isPlaying` 设为 true）。
+
+---
+
+## 📱 手机端真机调试方法
+
+为了测试移动端触摸交互和重力感应效果，请按以下步骤进行真机调试：
+
+1.  **确保网络环境**：
+    *   电脑和手机必须连接到**同一个 Wi-Fi 网络**。
+
+2.  **启动服务器 (电脑端)**：
+    *   在项目根目录下打开终端，运行：
+    ```powershell
+    python -m http.server 8080 --bind 0.0.0.0
+    ```
+
+3.  **获取本机 IP (电脑端)**：
+    *   在终端输入 `ipconfig` (Windows) 或 `ifconfig` (Mac/Linux)。
+    *   找到 **IPv4 地址**，例如 `192.168.1.5`。
+
+4.  **手机访问**：
+    *   打开手机浏览器，输入地址：`http://[你的IP地址]:8080`
+    *   例如：`http://192.168.1.5:8080`

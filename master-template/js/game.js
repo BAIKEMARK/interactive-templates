@@ -237,8 +237,103 @@ function bindInputEvents() {
         }
     });
 
+    // ... (Existing input binding code) ...
+
     // 鼠标/触摸 (示例)
     canvas.addEventListener('mousedown', () => {
         // Handle input
     });
 }
+
+/**
+ * =========================================
+ * 🎮 游戏开发接口 (Game UI API)
+ * 供 AI 或开发者直接调用以更新界面
+ * =========================================
+ */
+window.GameUI = {
+    /**
+     * 更新游戏内分数显示
+     * @param {number|string} value - 分数值
+     */
+    updateScore: (value) => {
+        const el = document.getElementById('scoreDisplay');
+        if (el) el.innerText = value;
+    },
+
+    /**
+     * 更新速度/副指标显示
+     * @param {number|string} value - 显示内容
+     */
+    updateSpeed: (value) => {
+        const el = document.getElementById('speedDisplay');
+        if (el) el.innerText = value;
+    },
+
+    /**
+     * 更新风格/状态显示
+     * @param {string} text - 显示文本
+     */
+    updateStyle: (text) => {
+        const el = document.getElementById('styleDisplay');
+        if (el) el.innerText = text;
+    },
+
+    /**
+     * 更新左侧面板的核心指标
+     * @param {number|string} value - 数值
+     * @param {string} [unit] - 单位 (可选)
+     */
+    updateLeftStat1: (value, unit) => {
+        const valEl = document.getElementById('val-stat1');
+        if (valEl) valEl.innerText = value;
+
+        if (unit) {
+            const unitEl = document.querySelector('#card-stat1 .unit');
+            if (unitEl) unitEl.innerText = unit;
+        }
+    },
+
+    /**
+     * 更新左侧面板的当前状态
+     * @param {string} text - 状态文本 (如: "运行中", "已暂停")
+     */
+    updateLeftStatus: (text) => {
+        const el = document.getElementById('val-status');
+        if (el) el.innerText = text;
+    },
+
+    /**
+     * 保存游戏记录
+     * @param {number} score - 分数
+     */
+    saveRecord: (score) => {
+        try {
+            const STORAGE_KEY = 'master_template_history';
+            const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+            const newRecord = {
+                score: score,
+                date: new Date().toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }),
+                isRecord: false
+            };
+
+            // 简单的排序逻辑 (高分在前)
+            history.push(newRecord);
+            history.sort((a, b) => b.score - a.score);
+
+            // 标记最高分
+            if (history.length > 0 && history[0] === newRecord) {
+                newRecord.isRecord = true;
+            }
+
+            // 只保留前10条
+            const top10 = history.slice(0, 10);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(top10));
+
+            console.log('Record saved:', newRecord);
+        } catch (e) {
+            console.error('Save record failed:', e);
+        }
+    }
+};
