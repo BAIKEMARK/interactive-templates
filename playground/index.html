@@ -4,555 +4,548 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playground</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Playground - 组件库</title>
+
+    <!-- Core Framework -->
+    <link rel="stylesheet" href="core/layout.css">
+
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="components/ui-basic/style.css">
+    <link rel="stylesheet" href="components/demo-game-ui/style.css">
+    <link rel="stylesheet" href="components/demo-lion-dance/style.css">
+    <link rel="stylesheet" href="components/demo-tilt/style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Removed specific Google Fonts import to favor system fonts defined in CSS -->
-    <style>
-        /* Playground specific overrides */
-        .playground-btn-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .playground-btn {
-            padding: 8px 16px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.2s;
-        }
-
-        .playground-btn:hover {
-            border-color: #000;
-            background: #f9f9f9;
-        }
-    </style>
 </head>
 
-<body>
-    <div id="app">
-        <!-- Left Column: UI Accordion -->
-        <div class="module-list-container scrollbar-hide">
-            <div class="content-wrapper">
-                <div class="header-section">
-                    <h1 class="main-title">Playground</h1>
-                    <a href="#" class="baike-link">
-                        <img src="assets/ui/baidu.png" alt="Baidu" class="link-icon-img">
-                        说明书 & 零件库
-                    </a>
-                </div>
+<body class="playground-body">
 
-                <div class="accordion" id="accordion">
-                    <!-- Module 0: UI Components -->
-                    <div class="module-item active" data-id="0" onclick="selectModule(0)">
-                        <div class="module-card">
-                            <div class="module-header">
-                                <div class="header-left">
-                                    <div class="icon-circle active-bg">
-                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="module-title active-text">UI 组件库</h2>
-                                </div>
-                                <div class="expand-icon hidden">
-                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <div class="module-content-wrapper" style="height: auto; opacity: 1;">
-                                <div class="module-content">
-                                    <p class="description">
-                                        Master Bundle 内置的基础 UI 组件。
-                                    </p>
-
-                                    <h3 class="text-sm font-bold mt-4 mb-2">状态卡片 (Stat Cards)</h3>
-                                    <div class="stats-grid">
-                                        <div class="stat-card">
-                                            <div class="stat-badge"><span class="dot"></span> ACTIVE</div>
-                                            <div class="stat-content">
-                                                <div class="stat-label">活跃卡片</div>
-                                                <div class="stat-value-wrapper"><span class="stat-value">100</span>
-                                                </div>
-                                            </div>
-                                            <div class="stat-bg-circle"></div>
-                                        </div>
-                                        <div class="stat-card">
-                                            <div class="stat-content">
-                                                <div class="stat-label">普通卡片</div>
-                                                <div class="stat-value-text">Text</div>
-                                            </div>
-                                            <div class="stat-bg-circle"></div>
-                                        </div>
-                                    </div>
-
-                                    <h3 class="text-sm font-bold mt-4 mb-2">规则卡片 (Rule Cards)</h3>
-                                    <div class="rules-list">
-                                        <div class="rule-card rule-orange">
-                                            <div class="rule-header">橙色主题</div>
-                                            <p class="rule-desc">用于强调或警告。</p>
-                                        </div>
-                                        <div class="rule-card rule-green">
-                                            <div class="rule-header">绿色主题</div>
-                                            <p class="rule-desc">用于表示通过、安全或成功。</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Module 1: Visual Effects -->
-                    <div class="module-item" data-id="1" onclick="selectModule(1)">
-                        <div class="module-card">
-                            <div class="module-header">
-                                <div class="header-left">
-                                    <div class="icon-circle inactive-bg">
-                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="module-title inactive-text">视觉特效</h2>
-                                </div>
-                                <div class="expand-icon">
-                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
-                                <div class="module-content">
-                                    <p class="description">
-                                        点击下方按钮，在右侧画布预览特效。
-                                    </p>
-                                    <div class="playground-btn-row">
-                                        <button class="playground-btn" onclick="toggleSnow(true)">开启下雪 (Snow)</button>
-                                        <button class="playground-btn" onclick="toggleSnow(false)">关闭下雪</button>
-                                    </div>
-                                    <div class="playground-btn-row">
-                                        <button class="playground-btn" onclick="changeBgColor('#f3f4f6')">默认背景</button>
-                                        <button class="playground-btn" onclick="changeBgColor('#E0F2FE')">冰雪蓝背景</button>
-                                        <button class="playground-btn" onclick="changeBgColor('#1a1a1a')">暗色背景</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Module 2: Overlays -->
-                    <div class="module-item" data-id="2" onclick="selectModule(2)">
-                        <div class="module-card">
-                            <div class="module-header">
-                                <div class="header-left">
-                                    <div class="icon-circle inactive-bg">
-                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="module-title inactive-text">弹窗与交互</h2>
-                                </div>
-                                <div class="expand-icon">
-                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
-                                <div class="module-content">
-                                    <p class="description">
-                                        测试内置的全屏弹窗和遮罩层。
-                                    </p>
-                                    <div class="playground-btn-row">
-                                        <button class="playground-btn" onclick="showOverlay('inactiveOverlay')">开始引导
-                                            (Start)</button>
-                                        <button class="playground-btn" onclick="showOverlay('pauseOverlay')">暂停遮罩
-                                            (Pause)</button>
-                                        <button class="playground-btn" onclick="showOverlay('historyOverlay')">历史记录
-                                            (History)</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Module 3: Advanced Effects -->
-                    <div class="module-item" data-id="3" onclick="selectModule(3)">
-                        <div class="module-card">
-                            <div class="module-header">
-                                <div class="header-left">
-                                    <div class="icon-circle inactive-bg">
-                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="module-title inactive-text">高级特效 (Effects)</h2>
-                                </div>
-                                <div class="expand-icon">
-                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
-                                <div class="module-content">
-                                    <p class="description">
-                                        集成来自舞狮与滑雪项目的高级交互特效。
-                                    </p>
-                                    <div class="playground-btn-row">
-                                        <button class="playground-btn" onclick="selectModule(3)">查看效果演示</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Module 4: UI Kits & Animations -->
-                    <div class="module-item" data-id="4" onclick="selectModule(4)">
-                        <div class="module-card">
-                            <div class="module-header">
-                                <div class="header-left">
-                                    <div class="icon-circle inactive-bg">
-                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                                        </svg>
-                                    </div>
-                                    <h2 class="module-title inactive-text">UI 组件 (UI Kits)</h2>
-                                </div>
-                                <div class="expand-icon">
-                                    <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="module-content-wrapper" style="height: 0; opacity: 0;">
-                                <div class="module-content">
-                                    <p class="description">
-                                        纯前端实现的现代化 UI 组件库，包含按钮、输入框、加载动画等。
-                                    </p>
-                                    <div class="playground-btn-row">
-                                        <button class="playground-btn" onclick="selectModule(4)">查看组件库</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
+    <!-- Sticky Header -->
+    <header class="playground-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <h1>Playground</h1>
             </div>
 
-            <div class="footer-brand">
-                <span class="co-build-text">内容共建</span>
-                <img src="assets/ui/datawhale-logo.png" alt="Datawhale" class="brand-logo">
+            <nav class="filter-nav">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="ui">UI 组件</button>
+                <button class="filter-btn" data-filter="game-ui">游戏界面</button>
+                <button class="filter-btn" data-filter="effect">视觉特效</button>
+                <button class="filter-btn" data-filter="demo">复杂演示</button>
+            </nav>
+
+            <a href="#" class="header-link">文档</a>
+        </div>
+    </header>
+
+    <!-- Main Grid Container -->
+    <main class="playground-grid" id="mainGrid">
+
+        <!-- Category: UI Elements (Buttons) -->
+        <div class="ui-card" data-category="ui">
+            <div class="ui-card-preview">
+                <button class="btn-modern btn-primary" onclick="alert('点击了主按钮')">主按钮</button>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".btn-primary">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')"
+                    data-target-id="code-btn-primary">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">主按钮 (Primary)</span>
+                <span class="ui-tag">#BTN-PRI</span>
             </div>
         </div>
 
-        <!-- Right Column: Visual -->
-        <div class="visual-container minimized" id="visualContainer">
-            <div class="resize-handle"></div>
-            <button class="toggle-size-btn" id="toggleSizeBtn">
-                <svg class="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-                </svg>
-                <svg class="icon-collapse hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div id="visual-content">
+        <div class="ui-card dark-preview" data-category="ui">
+            <div class="ui-card-preview">
+                <button class="btn-modern btn-glass" onclick="alert('点击了毛玻璃按钮')">毛玻璃效果</button>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".btn-glass">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')"
+                    data-target-id="code-btn-glass">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">毛玻璃按钮 (Glass)</span>
+                <span class="ui-tag">#BTN-GLASS</span>
+            </div>
+        </div>
 
-                <!-- Game Wrapper (Used for Preview) -->
-                <div id="gameWrapper">
-                    <div class="game-header">
-                        <h1 class="game-title">效果预览区</h1>
-                        <p class="game-subtitle">所有特效和UI元素将在此处展示</p>
-                    </div>
-                    <div id="gameContainer">
-                        <!-- HUD Preview -->
-                        <div class="game-hud">
-                            <div>Score: <span class="font-bold">1280</span></div>
-                            <div>Speed: <span class="font-bold text-green-500">12km/h</span></div>
-                        </div>
+        <!-- Inputs -->
+        <div class="ui-card" data-category="ui">
+            <div class="ui-card-preview" style="width:80%">
+                <div class="input-group">
+                    <input type="text" class="input-modern" placeholder=" " id="demoInput">
+                    <label for="demoInput" class="input-label">用户名</label>
+                </div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".input-group">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-input">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">浮动标签输入框</span>
+                <span class="ui-tag">#INP-FLOAT</span>
+            </div>
+        </div>
 
-                        <!-- Buttons Preview -->
-                        <button id="recordBtn" class="record-btn" onclick="showOverlay('historyOverlay')">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                                <path d="M4 22h16"></path>
-                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-                            </svg>
-                        </button>
-                        <button id="visualPauseBtn" class="pause-btn" onclick="showOverlay('pauseOverlay')">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="6" y="4" width="4" height="16"></rect>
-                                <rect x="14" y="4" width="4" height="16"></rect>
-                            </svg>
-                        </button>
+        <!-- Toggles -->
+        <div class="ui-card" data-category="ui">
+            <div class="ui-card-preview">
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".toggle-switch">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-toggle">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">iOS 开关</span>
+                <span class="ui-tag">#TOGGLE</span>
+            </div>
+        </div>
 
-                        <!-- Overlays -->
-                        <div id="historyOverlay" class="hidden">
-                            <div class="history-card">
-                                <div class="history-header">
-                                    <div class="history-title">历史最佳记录</div>
-                                    <button class="history-close-btn" onclick="hideAllOverlays()"><svg width="20"
-                                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2">
-                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                        </svg></button>
-                                </div>
-                                <div class="history-list">
-                                    <div class="history-item"><span
-                                            class="history-rank">1</span><span>2023-10-01</span><span>9999</span></div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Loaders -->
+        <div class="ui-card" data-category="ui">
+            <div class="ui-card-preview">
+                <div class="loader-spinner"></div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".loader-spinner">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-loader">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">加载转圈</span>
+                <span class="ui-tag">#LOAD-SPIN</span>
+            </div>
+        </div>
 
-                        <div id="pauseOverlay" class="hidden" onclick="hideAllOverlays()">
-                            <div class="pause-card">
-                                <div class="pause-title">暂停中</div>
-                                <div class="pause-subtitle">点击继续</div>
-                            </div>
-                        </div>
-
-                        <div id="inactiveOverlay" class="hidden" onclick="hideAllOverlays()">
-                            <div class="control-guide-card">
-                                <div class="guide-title">开始游戏</div>
-                                <div class="guide-section">
-                                    <div class="inputs-row">
-                                        <div class="key-group"><span>点击任意处开始</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <canvas id="gameCanvas" width="800" height="450"></canvas>
+        <!-- Cards -->
+        <div class="ui-card dark-preview span-2" data-category="ui">
+            <div class="ui-card-preview">
+                <div class="glass-card-demo" style="width: 100%; max-width: 300px;">
+                    <div class="card-content">
+                        <h4 class="card-title">毛玻璃卡片</h4>
+                        <p class="card-text">背景模糊效果，适合深色背景。</p>
                     </div>
                 </div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".glass-card-demo">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')"
+                    data-target-id="code-card-glass">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">毛玻璃卡片 (Glass Card)</span>
+                <span class="ui-tag">#CARD-GLASS</span>
+            </div>
+        </div>
 
-                <!-- Gallery Wrapper -->
-                <div id="galleryWrapper" class="gallery-wrapper" style="display: none;">
-                    <!-- Keep empty for now as focus is on module 0,1,2 driving the game view -->
-                </div>
+        <!-- Category: Game UI Simulator (Combined Overlay) -->
+        <div class="ui-card span-2" data-category="game-ui">
+            <div class="ui-card-preview game-ui-simulator"
+                style="background: linear-gradient(to bottom, #87CEEB, #E0F7FA); position: relative; height: 100%; min-height: 250px; overflow: hidden;">
+                <!-- Simulated Game Content -->
+                <div style="position: absolute; bottom: 0; width: 100%; height: 30%; background: white;"></div>
 
-                <!-- Module 3: Advanced Effects Demo -->
-                <div id="advancedEffectsWrapper" class="effects-wrapper"
-                    style="display: none; height: 100%; overflow-y: auto;">
-                    <div class="effects-container"
-                        style="display: flex; flex-direction: column; gap: 2rem; width: 100%; max-width: 800px; padding: 2rem; padding-bottom: 4rem;">
-
-                        <!-- 1. Interactive Comic Viewer -->
-                        <div class="effect-group">
-                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">1. 交互式漫画
-                                (Interactive Comic)</h3>
-                            <p class="effect-desc" style="color: #666; margin-bottom: 1rem;">来自舞狮项目：点击热区切换分镜，视频叠加实现动态效果。
-                            </p>
-
-                            <div class="comic-stack"
-                                style="position: relative; width: 100%; margin: 0 auto; display: flex; justify-content: center;">
-                                <div class="comic-wrapper" id="comicWrapper"
-                                    style="position: relative; height: 80vh; width: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                    <!-- Layout Driver -->
-                                    <img src="assets/rules/lion-customs-comic.png" class="comic-driver"
-                                        aria-hidden="true" alt=""
-                                        style="height: 100%; width: auto; display: block; visibility: hidden;">
-
-                                    <!-- Video Layers -->
-                                    <video id="comicVideo" class="comic-video" src="assets/rules/lion-customs-comic.mp4"
-                                        muted loop playsinline preload="auto"
-                                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover;"></video>
-                                    <video id="comicVideoAlt" class="comic-video"
-                                        src="assets/rules/lion-customs-comic-1.mp4" muted loop playsinline
-                                        preload="auto"
-                                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; opacity: 0; z-index: 1;"></video>
-
-                                    <!-- Mask Layer -->
-                                    <div id="comicImageMask" class="comic-image-mask"
-                                        style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; z-index: 2;">
-                                        <img src="assets/rules/lion-customs-comic.png" alt="漫画图解"
-                                            class="comic-image-full"
-                                            style="width: 100%; height: 100%; object-fit: cover;">
-                                    </div>
-
-                                    <!-- Hotspots -->
-                                    <div class="comic-hotspots"
-                                        style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 10;">
-                                        <button class="comic-hotspot" data-panel="0"
-                                            style="position: absolute; top: 15%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                            <div class="hotspot-dot"
-                                                style="width: 8px; height: 8px; background: white; border-radius: 50%;">
-                                            </div>
-                                        </button>
-                                        <button class="comic-hotspot" data-panel="1"
-                                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                            <div class="hotspot-dot"
-                                                style="width: 8px; height: 8px; background: white; border-radius: 50%;">
-                                            </div>
-                                        </button>
-                                        <button class="comic-hotspot" data-panel="2"
-                                            style="position: absolute; top: 85%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.3); border: 2px solid white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                                            <div class="hotspot-dot"
-                                                style="width: 8px; height: 8px; background: white; border-radius: 50%;">
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 2. Lightbox Zoom/Pan -->
-                        <div class="effect-group">
-                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">2. 灯箱缩放 (Lightbox
-                                Zoom/Pan)</h3>
-                            <p class="effect-desc" style="color: #666; margin-bottom: 1rem;">来自滑雪项目：点击图片全屏，支持双指/滚轮缩放与拖拽。
-                            </p>
-                            <div class="rules-visual-container" id="rulesVisualContainer"
-                                onclick="window.openLightbox()"
-                                style="cursor: pointer; position: relative; display: inline-block;">
-                                <img src="assets/rules/fis-rules.png" alt="规则" class="rules-image"
-                                    style="max-height: 200px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                                <div class="click-hint"
-                                    style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">
-                                    点击全屏查看</div>
-                            </div>
-                        </div>
-
-                        <!-- 3. 3D Tilt Effect -->
-                        <div class="effect-group">
-                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">3. 3D 悬浮视差 (3D
-                                Tilt)</h3>
-                            <p class="effect-desc" style="color: #666; margin-bottom: 1rem;">来自滑雪装备库：鼠标/触摸移动产生3D透视效果。
-                            </p>
-                            <div class="gallery-stage" id="tiltStage"
-                                style="height: 300px; background: rgba(255,255,255,0.5); border-radius: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                                <div class="stage-visual" style="perspective: 1000px;">
-                                    <img id="tiltImage" src="assets/gallery/snowboard.png" alt="Snowboard"
-                                        class="gallery-image"
-                                        style="max-height: 80%; max-width: 80%; transition: transform 0.1s ease-out;">
-                                </div>
-                            </div>
-                        </div>
-
+                <!-- Simulated Game UI -->
+                <div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 10px;">
+                    <div class="pause-card-mini" onclick="showToast('点击了暂停')">
+                        <span style="font-weight: bold;">||</span>
                     </div>
                 </div>
 
-                <!-- Module 4: UI Elements Demo -->
-                <div id="uiElementsWrapper" class="effects-wrapper"
-                    style="display: none; height: 100%; overflow-y: auto;">
-                    <div class="effects-container"
-                        style="display: flex; flex-direction: column; gap: 3rem; width: 100%; max-width: 800px; padding: 2rem; padding-bottom: 6rem;">
-
-                        <!-- Buttons Section -->
-                        <div class="ui-section">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Buttons</h3>
-                            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
-                                <button class="btn-modern btn-primary">Primary</button>
-                                <button class="btn-modern btn-secondary">Secondary</button>
-                                <button class="btn-modern btn-accent">Accent</button>
-                                <button class="btn-modern btn-glass">Glass</button>
-                                <button class="btn-modern btn-outline">Outline</button>
-                                <button class="btn-modern btn-danger">Danger</button>
-                            </div>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <div class="history-card-mini"
+                        style="background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+                        <div class="history-title" style="font-weight: bold; margin-bottom: 5px;">历史记录</div>
+                        <div style="font-size: 12px; color: #666; display: flex; flex-direction: column; gap: 4px;">
+                            <span>2024-02-04: 9999分</span>
+                            <span>2024-02-03: 8888分</span>
                         </div>
-
-                        <!-- Inputs Section -->
-                        <div class="ui-section">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Inputs</h3>
-                            <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 400px;">
-                                <div class="input-group">
-                                    <input type="text" class="input-modern" placeholder=" " id="input1">
-                                    <label for="input1" class="input-label">Floating Label</label>
-                                </div>
-                                <div class="input-group">
-                                    <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                    <input type="text" class="input-modern with-icon" placeholder="Search...">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Toggles & Loaders -->
-                        <div class="ui-section">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Feedback & Controls
-                            </h3>
-                            <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;">
-                                <!-- Toggles -->
-                                <div style="display: flex; gap: 1rem; align-items: center;">
-                                    <label class="toggle-switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <label class="toggle-switch">
-                                        <input type="checkbox" checked>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-
-                                <!-- Loaders -->
-                                <div class="loader-spinner"></div>
-                                <div class="loader-pulse"></div>
-                                <div class="loader-dots"><span></span><span></span><span></span></div>
-                            </div>
-                        </div>
-
-                        <!-- Cards -->
-                        <div class="ui-section">
-                            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Cards</h3>
-                            <div
-                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                                <!-- Glass Card -->
-                                <div class="glass-card-demo">
-                                    <div class="card-content">
-                                        <h4 class="card-title">Glassmorphism</h4>
-                                        <p class="card-text">Blurry backdrop filter with semi-transparent background.
-                                        </p>
-                                        <button class="btn-sm btn-accent" style="margin-top: 1rem;">Action</button>
-                                    </div>
-                                </div>
-                                <!-- Neo Card -->
-                                <div class="neo-card-demo">
-                                    <div class="card-content">
-                                        <h4 class="card-title">Neumorphism</h4>
-                                        <p class="card-text">Soft shadows creating depth and texture.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
-                <script src="js/script.js?v=2"></script>
-                <script src="js/snow-effect.js"></script>
-                <script src="js/playground.js"></script>
+                <div
+                    style="position: absolute; bottom: 10px; width: 100%; text-align: center; color: #333; font-size: 12px;">
+                    模拟游戏视口 (Game Viewport)
+                </div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')"
+                    data-target-id="code-game-ui">复制全套源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">游戏内界面组合 (Game UI)</span>
+                <span class="ui-tag">#GAME-UI</span>
+            </div>
+        </div>
+
+        <!-- Category: Visual Effects (Toggles) -->
+        <div class="ui-card" data-category="effect">
+            <div class="ui-card-preview" style="flex-direction: column; gap: 10px;">
+                <button class="btn-modern btn-outline" onclick="toggleSnow(true)">开启下雪</button>
+                <button class="btn-modern btn-outline" onclick="toggleSnow(false)">关闭下雪</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">全局下雪 (Snow)</span>
+                <span class="ui-tag">#FX-SNOW</span>
+            </div>
+        </div>
+
+        <div class="ui-card" data-category="effect">
+            <div class="ui-card-preview">
+                <div style="display:flex; gap:10px;">
+                    <div onclick="changeBgColor('#f3f4f6')"
+                        style="width:30px; height:30px; background:#f3f4f6; border:1px solid #ddd; border-radius:50%; cursor:pointer;"
+                        title="浅灰"></div>
+                    <div onclick="changeBgColor('#E0F2FE')"
+                        style="width:30px; height:30px; background:#E0F2FE; border:1px solid #ddd; border-radius:50%; cursor:pointer;"
+                        title="冰蓝"></div>
+                    <div onclick="changeBgColor('#1a1a1a')"
+                        style="width:30px; height:30px; background:#1a1a1a; border:1px solid #ddd; border-radius:50%; cursor:pointer;"
+                        title="深色"></div>
+                </div>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">背景切换 (Background)</span>
+                <span class="ui-tag">#FX-BG</span>
+            </div>
+        </div>
+
+        <!-- Category: Complex Demos (Modals) -->
+        <div class="ui-card span-2" data-category="demo" onclick="openDemoModal('comic')">
+            <div class="ui-card-preview" style="cursor: pointer;">
+                <img src="assets/rules/lion-customs-comic.png" style="max-height: 200px; object-fit: contain;">
+                <div class="play-icon-overlay">▶</div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".comic-wrapper">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-comic">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">舞狮交互漫画 (Lion Dance Comic)</span>
+                <span class="ui-tag">#DEMO-COMIC</span>
+            </div>
+        </div>
+
+        <div class="ui-card" data-category="demo" onclick="openDemoModal('lightbox')">
+            <div class="ui-card-preview" style="cursor: pointer;">
+                <img src="assets/rules/fis-rules.png" style="max-height: 150px;">
+                <div class="overlay-hint">点击预览</div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".lightbox-container">复制
+                    ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-lightbox">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">灯箱缩放 (Lightbox)</span>
+                <span class="ui-tag">#DEMO-LIGHTBOX</span>
+            </div>
+        </div>
+
+        <div class="ui-card" data-category="demo" onclick="openDemoModal('tilt')">
+            <div class="ui-card-preview" style="cursor: pointer;">
+                <img src="assets/gallery/snowboard.png" style="max-width: 80%;">
+                <div class="overlay-hint">3D 悬浮预览</div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'id')" data-value=".tilt-stage">复制 ID</button>
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-tilt">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">3D 倾斜卡片 (Tilt)</span>
+                <span class="ui-tag">#DEMO-TILT</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Global Toast -->
+    <div id="toastNotification" class="toast hidden">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="toastMessage">已复制!</span>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="modalContainer"></div>
+
+    <!-- Code Templates (Hidden Sources) -->
+
+    <script type="text/plain" id="code-comic">
+<!-- 1. Include CSS -->
+    <style>
+        .comic-hotspot {
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            50% {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            100% {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Hotspot Dot */
+        .hotspot-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            animation: pulse-white 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-white {
+            0% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+
+            70% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+    </style>
+
+    <!-- 2. HTML Structure -->
+    <div class="comic-container" style="position:relative; width:100%; max-width:800px; aspect-ratio:16/9;">
+        <!-- Base Video -->
+        <video id="baseVideo" src="assets/comic.mp4" loop muted autoplay
+            style="width:100%; height:100%; object-fit:contain;"></video>
+
+        <!-- Alt Video (Overlay) -->
+        <video id="altVideo" src="assets/comic-alt.mp4" loop muted
+            style="width:100%; height:100%; object-fit:contain; position:absolute; top:0; left:0; opacity:0; transition:opacity 0.5s;"></video>
+
+        <!-- Mask Image -->
+        <div id="mask"
+            style="position:absolute; inset:0; background: url('assets/cover.png') center/contain no-repeat; transition: clip-path 0.5s; pointer-events:none;">
+        </div>
+
+        <!-- Interactive Hotspots -->
+        <div class="comic-hotspots" style="position:absolute; inset:0;">
+            <div class="comic-hotspot" onclick="togglePanel(0)"
+                style="position:absolute; top:5%; left:5%; width:90%; height:28%; cursor:pointer;">
+                <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+            </div>
+            <div class="comic-hotspot" onclick="togglePanel(1)"
+                style="position:absolute; top:36%; left:5%; width:90%; height:28%; cursor:pointer;">
+                <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+            </div>
+            <div class="comic-hotspot" onclick="togglePanel(2)"
+                style="position:absolute; top:69%; left:5%; width:90%; height:28%; cursor:pointer;">
+                <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Interaction Logic -->
+    <script>
+    let activePanel = -1;
+    function togglePanel(index) {
+        const mask = document.getElementById('mask');
+        const video = document.getElementById('baseVideo');
+        const videoAlt = document.getElementById('altVideo');
+        
+        // Handle Logic (Same as Playground)
+        if (index === 1 && videoAlt) {
+            videoAlt.style.opacity = '1'; videoAlt.play(); video.pause();
+        } else if (videoAlt) {
+            videoAlt.style.opacity = '0'; videoAlt.pause(); video.play();
+        }
+
+        if (activePanel === index) {
+            activePanel = -1;
+            mask.style.clipPath = 'none';
+        } else {
+            activePanel = index;
+            const clips = [
+                'polygon(0% 33.33%, 100% 33.33%, 100% 100%, 0% 100%)', // Top Panel
+                'polygon(0% 0%, 100% 0%, 100% 33.33%, 0% 33.33%, 0% 66.66%, 100% 66.66%, 100% 100%, 0% 100%)', // Middle
+                'polygon(0% 0%, 100% 0%, 100% 66.66%, 0% 66.66%)' // Bottom
+            ];
+            mask.style.clipPath = clips[index];
+        }
+    }
+</script>
+    </script>
+
+    <script type="text/plain" id="code-tilt">
+<style>
+.tilt-wrapper { perspective: 1000px; display: inline-block; }
+</style>
+
+<div class="tilt-wrapper" onmousemove="handleTilt(event)" onmouseleave="resetTilt()">
+    <img id="tiltImg" src="image.png" style="transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1); transform-style:preserve-3d;">
+</div>
+
+<script>
+    let ticking = false;
+    function handleTilt(e) {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const el = e.currentTarget;
+                const rect = el.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                // Add scale and reverse Y axis for natural feel
+                document.getElementById('tiltImg').style.transform = 
+                    `rotateY(${x * 30}deg) rotateX(${-y * 30}deg) scale(1.05)`;
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+    function resetTilt() {
+        document.getElementById('tiltImg').style.transform = 'none';
+    }
+</script>
+    </script>
+
+    <script type="text/plain" id="code-lightbox">
+<style>
+.lightbox-modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999;
+    display: none; align-items: center; justify-content: center;
+}
+.lightbox-modal.active { display: flex; }
+</style>
+
+<!-- Trigger -->
+<div class="lightbox-trigger" onclick="document.getElementById('lb-modal').classList.add('active')" style="cursor:zoom-in">
+    <img src="preview.png" style="max-width:100%">
+</div>
+
+<!-- Modal -->
+<div class="lightbox-modal" id="lb-modal" onclick="this.classList.remove('active')">
+    <img src="full-res.png" style="max-width:90%; max-height:90%; cursor:zoom-out">
+</div>
+    </script>
+
+    <!-- UI Component Logic (Hidden Code Sources) -->
+
+    <script type="text/plain" id="code-btn-primary">
+<style>
+.btn-modern { border: none; border-radius: 8px; padding: 10px 24px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+</style>
+<button class="btn-modern btn-primary">Primary</button>
+    </script>
+
+    <script type="text/plain" id="code-btn-glass">
+<style>
+.btn-modern { border: none; border-radius: 8px; padding: 10px 24px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
+.btn-glass:hover { background: rgba(255, 255, 255, 0.2); }
+</style>
+<button class="btn-modern btn-glass">Glass Button</button>
+    </script>
+
+    <script type="text/plain" id="code-input">
+<style>
+.input-group { position: relative; width: 100%; max-width: 300px; }
+.input-modern { width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; outline: none; background: white; }
+.input-label { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: white; padding: 0 4px; color: #6b7280; pointer-events: none; transition: 0.2s; }
+.input-modern:focus { border-color: #6366f1; }
+.input-modern:focus ~ .input-label, .input-modern:not(:placeholder-shown) ~ .input-label { top: 0; font-size: 0.75rem; color: #6366f1; }
+</style>
+<div class="input-group">
+    <input type="text" class="input-modern" placeholder=" ">
+    <label class="input-label">Label</label>
+</div>
+    </script>
+
+    <script type="text/plain" id="code-toggle">
+<style>
+.toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+.toggle-switch .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+.toggle-switch input:checked + .slider { background-color: #2563eb; }
+.toggle-switch input:checked + .slider:before { transform: translateX(22px); }
+</style>
+<label class="toggle-switch">
+    <input type="checkbox" checked>
+    <span class="slider round"></span>
+</label>
+    </script>
+
+    <script type="text/plain" id="code-loader">
+<style>
+.loader-spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+<div class="loader-spinner"></div>
+    </script>
+
+    <script type="text/plain" id="code-card-glass">
+<style>
+.glass-card-demo { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 12px; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+</style>
+<div class="glass-card-demo">
+    <h3>Glass Card</h3>
+    <p>Elegant translucency for dark backgrounds.</p>
+</div>
+    </script>
+
+    <script type="text/plain" id="code-game-ui">
+<style>
+.pause-card-mini { width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s; }
+.pause-card-mini:hover { transform: scale(1.1); }
+.history-card-mini { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 150px; }
+.history-title { font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+</style>
+<!-- Pause Button -->
+<div class="pause-card-mini">
+   <div style="font-weight:900; color:#333;">||</div>
+</div>
+
+<!-- History Panel -->
+<div class="history-card-mini">
+    <div class="history-title">History</div>
+    <div>Score: 9999</div>
+</div>
+    </script>
+
+    <!-- Hidden Canvas for Snow Effect -->
+    <div style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; visibility:hidden;"
+        id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Core & Components Logic -->
+    <script src="core/snow-effect.js"></script>
+    <script src="core/app.js"></script>
+    <script src="components/demo-lion-dance/logic.js"></script>
+    <script src="components/demo-tilt/logic.js"></script>
+
 </body>
 
 </html>

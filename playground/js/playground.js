@@ -1,116 +1,213 @@
+
 /**
- * playground.js - 操场逻辑
- * 用于演示特效、弹窗等
+ * playground.js - V5 (Optimized & Fixed)
  */
 
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-let snowEffect = null;
-
-// 背景色配置
-let currentBgColor = '#f3f4f6';
-
 document.addEventListener('DOMContentLoaded', () => {
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // 初始化背景
-    drawBackground(currentBgColor);
-
-    // 初始化 SnowEffect (from snow-effect.js)
-    // 传入 false 不自动开始
-    if (typeof SnowEffect !== 'undefined') {
-        snowEffect = new SnowEffect(false);
-    }
+    initFilters();
+    initSnow();
 });
 
-function resizeCanvas() {
-    const parent = canvas.parentElement;
-    if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-        drawBackground(currentBgColor);
-    }
-}
+/* ============================
+   1. Filtering System
+   ============================ */
+function initFilters() {
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.ui-card');
 
-function changeBgColor(color) {
-    currentBgColor = color;
-    drawBackground(color);
-    const container = document.getElementById('gameContainer');
-    if (container) container.style.backgroundColor = color;
-}
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-function drawBackground(color) {
-    // 简单填充背景色
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
+            const filter = btn.getAttribute('data-filter');
 
-// ---- Global Playground Functions ----
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
 
-// 切换下雪通过调用 SnowEffect 实例的 start/stop
-window.toggleSnow = function (enable) {
-    if (!snowEffect) return;
-    if (enable) {
-        snowEffect.start();
-    } else {
-        snowEffect.stop();
-        // 停止特效后，可能需要重绘一下背景以清除残留粒子(虽然 SnowEffect 自身 hidden 了 canvas, 但如果是画在同一个canvas上则需要)
-        // 这里的 SnowEffect 是独立的 overlay canvas，所以 hide 足够了。
-        // 但如果我们的 playground 逻辑里有其他 canvas 内容，不受影响。
-    }
-}
-
-// 切换背景颜色
-window.changeBgColor = changeBgColor;
-
-// 显示弹窗
-window.showOverlay = function (id) {
-    hideAllOverlays();
-    const el = document.getElementById(id);
-    if (el) el.classList.remove('hidden');
-}
-
-// 隐藏所有弹窗
-function hideAllOverlays() {
-    ['inactiveOverlay', 'pauseOverlay', 'historyOverlay'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
+                if (filter === 'all' || category === filter) {
+                    card.classList.remove('hidden');
+                    card.style.animation = 'none';
+                    card.offsetHeight;
+                    card.style.animation = 'fadeInPage 0.5s ease-out';
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
     });
 }
-window.hideAllOverlays = hideAllOverlays;
 
-// --- Advanced Effects Logic ---
+/* ============================
+   2. Clipboard Logic
+   ============================ */
+window.copyCode = function (btn, type) {
+    let value = '';
 
-// 1. Comic Viewer Logic
-window.initComicViewer = function () {
-    const comicWrapper = document.getElementById('comicWrapper');
-    if (!comicWrapper) return;
+    // Mode 1: Direct Value
+    if (btn.hasAttribute('data-value')) {
+        value = btn.getAttribute('data-value');
+    }
+    // Mode 2: Target ID (For long code blocks)
+    else if (btn.hasAttribute('data-target-id')) {
+        const targetId = btn.getAttribute('data-target-id');
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+            // Trim indentation for cleaner copy
+            value = targetEl.innerHTML.replace(/^\s*\n/g, '').replace(/\s*$/, '');
+            // Optional: formatting logic could go here
+        }
+    }
 
-    const imageMask = document.getElementById('comicImageMask');
+    if (!value) return;
+
+    if (window.event) window.event.stopPropagation();
+
+    navigator.clipboard.writeText(value).then(() => {
+        showToast(type === 'id' ? 'ID 已复制!' : '源码已复制!');
+    }).catch(err => console.error('Copy failed', err));
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    if (toast && toastMsg) {
+        toastMsg.innerText = msg;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 2000);
+    }
+}
+
+/* ============================
+   3. Global Effects
+   ============================ */
+let snowEffect = null;
+function initSnow() {
+    if (typeof SnowEffect !== 'undefined') {
+        const canvas = document.getElementById('gameCanvas');
+        if (canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+            snowEffect = new SnowEffect(false);
+        }
+    }
+}
+
+window.toggleSnow = function (enable) {
+    if (window.event) window.event.stopPropagation();
+
+    if (!snowEffect) return;
+    const container = document.getElementById('gameContainer');
+    if (enable) {
+        container.style.visibility = 'visible';
+        snowEffect.start();
+        showToast('下雪特效开启');
+    } else {
+        container.style.visibility = 'hidden';
+        snowEffect.stop();
+        showToast('下雪特效关闭');
+    }
+}
+
+window.changeBgColor = function (color) {
+    if (window.event) window.event.stopPropagation();
+
+    document.body.style.backgroundColor = color;
+    const header = document.querySelector('.playground-header');
+    if (color === '#1a1a1a') {
+        document.body.style.color = 'white';
+        if (header) header.style.background = 'rgba(0,0,0,0.8)';
+    } else {
+        document.body.style.color = '#111827';
+        if (header) header.style.background = 'rgba(255,255,255,0.8)';
+    }
+}
+
+/* ============================
+   4. Modal Logic (Fixed & Optimized)
+   ============================ */
+
+window.openDemoModal = function (type) {
+    if (window.event) window.event.stopPropagation(); // prevent card click bubbling
+
+    const container = document.getElementById('modalContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const modal = document.createElement('div');
+    modal.className = 'demo-modal visible';
+
+    modal.innerHTML = `
+        <button class="modal-close-btn" onclick="closeDemoModal()">×</button>
+        <div class="modal-content" id="modalContent"></div>
+    `;
+
+    container.appendChild(modal);
+
+    const content = modal.querySelector('#modalContent');
+
+    if (type === 'comic') {
+        renderComicDemo(content);
+    } else if (type === 'tilt') {
+        renderTiltDemo(content);
+    } else if (type === 'lightbox') {
+        renderLightboxDemo(content);
+    }
+}
+
+// FIX: Expose openLightbox for HTML onclick="openLightbox()"
+window.openLightbox = function () {
+    window.openDemoModal('lightbox');
+}
+
+window.closeDemoModal = function () {
+    const container = document.getElementById('modalContainer');
+    if (container) container.innerHTML = '';
+    // Stop any requestAnimationFrames or video sounds if needed
+}
+
+// Logic for Comic
+function renderComicDemo(container) {
+    container.innerHTML = `
+        <div class="comic-wrapper" id="comicWrapper" style="position:relative; width:100%; height:100%; max-width:1200px; display:flex; justify-content:center; align-items:center;">
+             <div class="comic-container" style="position:relative; width:100%; height:100%;">
+                
+                <video id="comicVideo" src="assets/rules/lion-customs-comic.mp4" loop muted playsinline style="width:100%; height:100%; object-fit:contain; position:absolute;"></video>
+                <video id="comicVideoAlt" src="assets/rules/lion-customs-comic-1.mp4" loop muted playsinline style="width:100%; height:100%; object-fit:contain; position:absolute; opacity:0; transition:opacity 0.5s;"></video>
+
+                <div id="comicImageMask" style="position:absolute; inset:0; background: url('assets/rules/lion-customs-comic.png') center/contain no-repeat; transition: clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1); pointer-events:none;"></div>
+
+                <!-- Hotspots with Visuals -->
+                <div class="comic-hotspots" style="position:absolute; inset:0;">
+                    <div class="comic-hotspot" onclick="togglePanel(0)" style="position:absolute; top:5%; left:5%; width:90%; height:28%; cursor:pointer;">
+                        <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+                    </div>
+                    <div class="comic-hotspot" onclick="togglePanel(1)" style="position:absolute; top:36%; left:5%; width:90%; height:28%; cursor:pointer;">
+                         <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+                    </div>
+                    <div class="comic-hotspot" onclick="togglePanel(2)" style="position:absolute; top:69%; left:5%; width:90%; height:28%; cursor:pointer;">
+                         <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+                    </div>
+                </div>
+             </div>
+        </div>
+    `;
+
     const video = document.getElementById('comicVideo');
     const videoAlt = document.getElementById('comicVideoAlt');
-    const hotspots = document.querySelectorAll('.comic-hotspot');
-
-    if (!imageMask || !video || hotspots.length === 0) return;
-
+    const mask = document.getElementById('comicImageMask');
     let activePanel = -1;
 
-    // Start video when module is visible (handled by selectModule potentially, or Observer)
-    // For playground, we just ensure it plays when clicked or interacted
-    video.play().catch(() => { });
+    if (video) video.play().catch(e => console.log(e));
 
-    hotspots.forEach((hotspot, index) => {
-        // Remove existing listeners to avoid duplicates if called multiple times
-        // Note: anonymous functions can't be removed easily, but for playground simple init is okay.
-        // Better: check if initialized.
-        hotspot.onclick = (e) => {
-            e.stopPropagation();
-            togglePanel(index);
-        };
-    });
+    window.togglePanel = function (index) {
+        if (window.event) window.event.stopPropagation();
 
-    function togglePanel(index) {
         if (index === 1 && videoAlt) {
             videoAlt.style.opacity = '1';
             videoAlt.currentTime = 0;
@@ -123,143 +220,53 @@ window.initComicViewer = function () {
         }
 
         if (activePanel === index) {
-            closePanel();
-            return;
+            activePanel = -1;
+            mask.style.clipPath = 'none';
+        } else {
+            activePanel = index;
+            const clips = [
+                'polygon(0% 33.33%, 100% 33.33%, 100% 100%, 0% 100%)',
+                'polygon(0% 0%, 100% 0%, 100% 33.33%, 0% 33.33%, 0% 66.66%, 100% 66.66%, 100% 100%, 0% 100%)',
+                'polygon(0% 0%, 100% 0%, 100% 66.66%, 0% 66.66%)'
+            ];
+            mask.style.clipPath = clips[index];
         }
-
-        activePanel = index;
-
-        // Clip Paths for 3-panel comic (approximate based on loose layout, can be tuned)
-        const clipPaths = [
-            'polygon(0% 33.33%, 100% 33.33%, 100% 100%, 0% 100%)',
-            'polygon(0% 0%, 100% 0%, 100% 33.33%, 0% 33.33%, 0% 66.66%, 100% 66.66%, 100% 100%, 0% 100%)',
-            'polygon(0% 0%, 100% 0%, 100% 66.66%, 0% 66.66%)'
-        ];
-
-        imageMask.style.clipPath = clipPaths[index];
-    }
-
-    function closePanel() {
-        activePanel = -1;
-        imageMask.style.clipPath = 'none';
-        if (videoAlt) {
-            videoAlt.style.opacity = '0';
-            videoAlt.pause();
-        }
-        if (video.paused) video.play().catch(() => { });
     }
 }
 
-// 2. Lightbox Logic
-window.openLightbox = function () {
-    let lightbox = document.getElementById('lightboxOverlay');
-    if (!lightbox) {
-        lightbox = document.createElement('div');
-        lightbox.id = 'lightboxOverlay';
-        lightbox.className = 'lightbox-overlay';
-        lightbox.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(255,255,255,0.98); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s;";
+// Logic for Tilt (Optimized with requestAnimationFrame)
+function renderTiltDemo(container) {
+    container.innerHTML = `
+        <div class="tilt-stage" id="tiltStageModal" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; perspective:1000px;">
+            <img id="tiltImageModal" src="assets/gallery/snowboard.png" style="max-height:80%; max-width:80%; transition:transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1); transform-style:preserve-3d;">
+        </div>
+    `;
+    const stage = document.getElementById('tiltStageModal');
+    const img = document.getElementById('tiltImageModal');
 
-        lightbox.innerHTML = `
-            <div class="lightbox-content" style="width:100%; height:100%; position:relative; display:flex; align-items:center; justify-content:center;">
-                <button class="lightbox-close" onclick="closeLightbox()" style="position:absolute; top:20px; right:20px; z-index:10001; background:none; border:none; cursor:pointer; padding:10px;">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <div id="lightboxImageContainer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; cursor:grab;">
-                    <img id="lightboxImage" src="assets/rules/fis-rules.png" style="max-width:90%; max-height:90%; object-fit:contain; transition: transform 0.1s linear;">
-                </div>
-            </div>
-        `;
-        document.body.appendChild(lightbox);
-
-        // Add class for visible state
-        const style = document.createElement('style');
-        style.innerHTML = `.lightbox-overlay.visible { opacity: 1 !important; pointer-events: auto !important; }`;
-        document.head.appendChild(style);
-
-        setTimeout(() => initLightboxInteractions(), 100);
-    }
-
-    setTimeout(() => lightbox.classList.add('visible'), 10);
-    if (window.resetLightboxState) window.resetLightboxState();
-}
-
-window.closeLightbox = function () {
-    const lightbox = document.getElementById('lightboxOverlay');
-    if (lightbox) lightbox.classList.remove('visible');
-}
-
-function initLightboxInteractions() {
-    const container = document.getElementById('lightboxImageContainer');
-    const img = document.getElementById('lightboxImage');
-    if (!container || !img) return;
-
-    let scale = 1, pointX = 0, pointY = 0, startX = 0, startY = 0, panning = false;
-
-    window.resetLightboxState = () => { scale = 1; pointX = 0; pointY = 0; updateTransform(); };
-
-    function updateTransform() {
-        img.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
-    }
-
-    container.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -0.2 : 0.2;
-        scale = Math.min(Math.max(0.5, scale + delta), 4);
-        updateTransform();
-    }, { passive: false });
-
-    // Panning logic
-    img.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        panning = true;
-        startX = e.clientX - pointX;
-        startY = e.clientY - pointY;
-        container.style.cursor = 'grabbing';
-    });
-
-    window.addEventListener('mousemove', (e) => {
-        if (!panning) return;
-        e.preventDefault();
-        pointX = e.clientX - startX;
-        pointY = e.clientY - startY;
-        updateTransform();
-    });
-
-    window.addEventListener('mouseup', () => {
-        if (panning) {
-            panning = false;
-            container.style.cursor = 'grab';
-        }
-    });
-}
-
-
-// 3. 3D Tilt Logic
-window.initTiltEffect = function () {
-    const stage = document.getElementById('tiltStage');
-    const image = document.getElementById('tiltImage');
-
-    if (!stage || !image) return;
+    let ticking = false;
 
     stage.addEventListener('mousemove', (e) => {
-        const rect = stage.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -12;
-        const rotateY = ((x - centerX) / centerX) * 12;
-
-        image.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const rect = stage.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                img.style.transform = `rotateY(${x * 30}deg) rotateX(${-y * 30}deg) scale(1.05)`;
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
-
     stage.addEventListener('mouseleave', () => {
-        image.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+        img.style.transform = 'none';
     });
 }
 
-// Init when content loads
-document.addEventListener('DOMContentLoaded', () => {
-    // Optional: auto-init if needed
-});
+function renderLightboxDemo(container) {
+    container.innerHTML = `
+        <div style="cursor:grab; overflow:hidden; width:100%; height:100%; display:flex; align-items:center; justify-content:center;" id="lbContainer">
+            <img src="assets/rules/fis-rules.png" id="lbImage" style="max-height:90%; max-width:90%; transition:transform 0.1s;">
+        </div>
+    `;
+}
