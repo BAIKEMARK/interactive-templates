@@ -6,6 +6,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initFilters();
     initSnow();
+    initFirework();
 });
 
 /* ============================
@@ -80,6 +81,8 @@ window.showToast = function (msg) {
    3. Global Effects Manager
    ============================ */
 let snowEffect = null;
+let fireworkEffect = null; // New
+
 function initSnow() {
     if (typeof SnowEffect !== 'undefined') {
         const canvas = document.getElementById('gameCanvas');
@@ -92,6 +95,12 @@ function initSnow() {
             });
             snowEffect = new SnowEffect(false);
         }
+    }
+}
+
+function initFirework() {
+    if (typeof FireworkEffect !== 'undefined') {
+        fireworkEffect = new FireworkEffect();
     }
 }
 
@@ -108,6 +117,19 @@ window.toggleSnow = function (enable) {
         container.style.visibility = 'hidden';
         snowEffect.stop();
         showToast('下雪特效关闭');
+    }
+}
+
+window.toggleFirework = function (enable) {
+    if (window.event) window.event.stopPropagation();
+
+    if (!fireworkEffect) return;
+    if (enable) {
+        fireworkEffect.start();
+        showToast('点击任意处放烟花!');
+    } else {
+        fireworkEffect.stop();
+        showToast('烟花特效关闭');
     }
 }
 

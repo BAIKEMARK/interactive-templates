@@ -193,6 +193,9 @@
                 <button class="btn-modern btn-outline" onclick="toggleSnow(true)">开启下雪</button>
                 <button class="btn-modern btn-outline" onclick="toggleSnow(false)">关闭下雪</button>
             </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-fx-snow">复制源码</button>
+            </div>
             <div class="ui-card-footer">
                 <span class="ui-name">全局下雪 (Snow)</span>
                 <span class="ui-tag">#FX-SNOW</span>
@@ -213,9 +216,27 @@
                         title="深色"></div>
                 </div>
             </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-fx-bg">复制源码</button>
+            </div>
             <div class="ui-card-footer">
                 <span class="ui-name">背景切换 (Background)</span>
                 <span class="ui-tag">#FX-BG</span>
+            </div>
+        </div>
+
+        <div class="ui-card" data-category="effect">
+            <div class="ui-card-preview" style="flex-direction: column; gap: 10px;">
+                <button class="btn-modern btn-outline" onclick="toggleFirework(true)">开启烟花</button>
+                <button class="btn-modern btn-outline" onclick="toggleFirework(false)">关闭烟花</button>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')"
+                    data-target-id="code-fx-firework">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">点击爆炸 (Firework)</span>
+                <span class="ui-tag">#FX-FIREWORK</span>
             </div>
         </div>
 
@@ -266,6 +287,26 @@
             </div>
         </div>
 
+        <!-- TEMPLATE: HOW TO ADD NEW COMPONENT
+         1. Copy this block.
+         2. Replace 'YOUR-CATEGORY', 'YOUR-ID' and content.
+         3. Add the source code in a <script id="code-YOUR-ID"> block at the bottom.
+    -->
+        <!--
+    <div class="ui-card" data-category="ui">
+        <div class="ui-card-preview">
+            <button class="btn-modern">Preview Object</button>
+        </div>
+        <div class="ui-card-actions">
+            <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-YOUR-ID">复制源码</button>
+        </div>
+        <div class="ui-card-footer">
+            <span class="ui-name">Component Name</span>
+            <span class="ui-tag">#TAG</span>
+        </div>
+    </div>
+    -->
+
     </main>
 
     <!-- Global Toast -->
@@ -279,260 +320,605 @@
     <!-- Modals Container -->
     <div id="modalContainer"></div>
 
-    <!-- Code Templates (Hidden Sources) -->
+    <!-- ================================================================= -->
+    <!-- CODE SNIPPETS REPOSITORY (Source of Truth for "Copy Code")        -->
+    <!-- These snippets must be 100% standalone (HTML/CSS/JS included).    -->
+    <!-- ================================================================= -->
 
     <script type="text/plain" id="code-comic">
-<!-- 1. Include CSS -->
+<!-- [Interactive Comic Component] -->
+    <!-- Dependency: 2 Video Files (Base + Variation), 1 Cover Image -->
+
     <style>
-        .comic-hotspot {
-            animation: pulse-border 2s infinite;
+        /* Container Aspect Ratio 16:9 */
+        .comic-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            background: #000;
+            overflow: hidden;
+            border-radius: 12px;
         }
 
-        @keyframes pulse-border {
-            0% {
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            50% {
-                background: rgba(255, 255, 255, 0.3);
-            }
-
-            100% {
-                background: rgba(255, 255, 255, 0.1);
-            }
+        .comic-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        /* Hotspot Dot */
-        .hotspot-dot {
+        .comic-overlay {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.6);
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        /* Interactive Mask */
+        .comic-mask {
+            position: absolute;
+            inset: 0;
+            background: url('assets/REPLACE_WITH_COVER.png') center/contain no-repeat;
+            transition: clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Visual Hint (Pulsing Dot) */
+        .hotspot-hint {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-            animation: pulse-white 2s infinite;
+            animation: hint-pulse 2s infinite;
             pointer-events: none;
         }
 
-        @keyframes pulse-white {
+        @keyframes hint-pulse {
             0% {
-                transform: translate(-50%, -50%) scale(0.95);
                 box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
             }
 
             70% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
             }
 
             100% {
-                transform: translate(-50%, -50%) scale(0.95);
                 box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
             }
         }
     </style>
 
-    <!-- 2. HTML Structure -->
-    <div class="comic-container" style="position:relative; width:100%; max-width:800px; aspect-ratio:16/9;">
-        <!-- Base Video -->
-        <video id="baseVideo" src="assets/comic.mp4" loop muted autoplay
-            style="width:100%; height:100%; object-fit:contain;"></video>
+    <div class="comic-container">
+        <!-- Layer 1: Base Video (Asset A) -->
+        <video id="videoBase" class="comic-video" src="assets/video_base.mp4" loop muted autoplay playsinline></video>
 
-        <!-- Alt Video (Overlay) -->
-        <video id="altVideo" src="assets/comic-alt.mp4" loop muted
-            style="width:100%; height:100%; object-fit:contain; position:absolute; top:0; left:0; opacity:0; transition:opacity 0.5s;"></video>
+        <!-- Layer 2: Alternate Video (Asset B) -->
+        <video id="videoAlt" class="comic-video comic-overlay" src="assets/video_alt.mp4" loop muted
+            playsinline></video>
 
-        <!-- Mask Image -->
-        <div id="mask"
-            style="position:absolute; inset:0; background: url('assets/cover.png') center/contain no-repeat; transition: clip-path 0.5s; pointer-events:none;">
-        </div>
+        <!-- Layer 3: Static Cover Mask (Asset C) -->
+        <div id="comicMask" class="comic-mask"></div>
 
-        <!-- Interactive Hotspots -->
-        <div class="comic-hotspots" style="position:absolute; inset:0;">
-            <div class="comic-hotspot" onclick="togglePanel(0)"
-                style="position:absolute; top:5%; left:5%; width:90%; height:28%; cursor:pointer;">
-                <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+        <!-- Layer 4: Clickable Hotspots -->
+        <div style="position: absolute; inset: 0; z-index: 20;">
+            <!-- Panel 1 (Top Left) -->
+            <div onclick="triggerComicPanel(0)"
+                style="position: absolute; top: 5%; left: 5%; width: 40%; height: 40%; cursor: pointer;">
+                <div class="hotspot-hint" style="top: 50%; left: 50%;"></div>
             </div>
-            <div class="comic-hotspot" onclick="togglePanel(1)"
-                style="position:absolute; top:36%; left:5%; width:90%; height:28%; cursor:pointer;">
-                <div class="hotspot-dot" style="top:50%; left:50%;"></div>
-            </div>
-            <div class="comic-hotspot" onclick="togglePanel(2)"
-                style="position:absolute; top:69%; left:5%; width:90%; height:28%; cursor:pointer;">
-                <div class="hotspot-dot" style="top:50%; left:50%;"></div>
+            <!-- Panel 2 (Bottom Right) -->
+            <div onclick="triggerComicPanel(1)"
+                style="position: absolute; bottom: 5%; right: 5%; width: 40%; height: 40%; cursor: pointer;">
+                <div class="hotspot-hint" style="top: 50%; left: 50%;"></div>
             </div>
         </div>
     </div>
 
-    <!-- 3. Interaction Logic -->
     <script>
-    let activePanel = -1;
-    function togglePanel(index) {
-        const mask = document.getElementById('mask');
-        const video = document.getElementById('baseVideo');
-        const videoAlt = document.getElementById('altVideo');
+    let activePanelIdx = -1;
+    
+    function triggerComicPanel(index) {
+        const mask = document.getElementById('comicMask');
+        const vBase = document.getElementById('videoBase');
+        const vAlt = document.getElementById('videoAlt');
         
-        // Handle Logic (Same as Playground)
-        if (index === 1 && videoAlt) {
-            videoAlt.style.opacity = '1'; videoAlt.play(); video.pause();
-        } else if (videoAlt) {
-            videoAlt.style.opacity = '0'; videoAlt.pause(); video.play();
-        }
+        // Define Clip Paths for each panel state
+        const clips = [
+            'polygon(0% 0%, 50% 0%, 50% 50%, 0% 50%)', // Reveal Top Left
+            'polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%)' // Reveal Bottom Right
+        ];
 
-        if (activePanel === index) {
-            activePanel = -1;
-            mask.style.clipPath = 'none';
+        // Toggle Logic
+        if (activePanelIdx === index) {
+            // Close
+            activePanelIdx = -1;
+            mask.style.clipPath = 'none'; // Show full cover
+            vAlt.style.opacity = '0'; vAlt.pause();
+            vBase.play();
         } else {
-            activePanel = index;
-            const clips = [
-                'polygon(0% 33.33%, 100% 33.33%, 100% 100%, 0% 100%)', // Top Panel
-                'polygon(0% 0%, 100% 0%, 100% 33.33%, 0% 33.33%, 0% 66.66%, 100% 66.66%, 100% 100%, 0% 100%)', // Middle
-                'polygon(0% 0%, 100% 0%, 100% 66.66%, 0% 66.66%)' // Bottom
-            ];
-            mask.style.clipPath = clips[index];
+            // Open
+            activePanelIdx = index;
+            mask.style.clipPath = clips[index]; // Cut hole in cover
+            
+            // Example: Play Alt video only for Panel 1
+            if (index === 1) {
+                vAlt.style.opacity = '1'; vAlt.play(); vBase.pause();
+            } else {
+                vAlt.style.opacity = '0'; vBase.play();
+            }
         }
     }
 </script>
     </script>
 
     <script type="text/plain" id="code-tilt">
-<style>
-.tilt-wrapper { perspective: 1000px; display: inline-block; }
-</style>
-
-<div class="tilt-wrapper" onmousemove="handleTilt(event)" onmouseleave="resetTilt()">
-    <img id="tiltImg" src="image.png" style="transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1); transform-style:preserve-3d;">
-</div>
-
-<script>
-    let ticking = false;
-    function handleTilt(e) {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const el = e.currentTarget;
-                const rect = el.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width - 0.5;
-                const y = (e.clientY - rect.top) / rect.height - 0.5;
-                // Add scale and reverse Y axis for natural feel
-                document.getElementById('tiltImg').style.transform = 
-                    `rotateY(${x * 30}deg) rotateX(${-y * 30}deg) scale(1.05)`;
-                ticking = false;
-            });
-            ticking = true;
+<!-- [3D Tilt Card Component] -->
+    <style>
+        .tilt-wrapper {
+            perspective: 1000px;
+            display: inline-block;
+            padding: 20px;
         }
+
+        .tilt-card {
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+    </style>
+
+    <div class="tilt-wrapper" onmousemove="handleTiltMove(event)" onmouseleave="resetTilt(event)">
+        <img class="tilt-card" src="assets/REPLACE_WITH_IMAGE.png" alt="3D Card">
+    </div>
+
+    <script>
+    function handleTiltMove(e) {
+        requestAnimationFrame(() => {
+            const wrapper = e.currentTarget;
+            const card = wrapper.querySelector('.tilt-card');
+            const rect = wrapper.getBoundingClientRect();
+            
+            // Calculate mouse position (-0.5 to 0.5)
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            
+            // Apply Transform (Rotate + Slight Scale)
+            card.style.transform = `rotateY(${x * 20}deg) rotateX(${-y * 20}deg) scale(1.02)`;
+        });
     }
-    function resetTilt() {
-        document.getElementById('tiltImg').style.transform = 'none';
+
+    function resetTilt(e) {
+        const card = e.currentTarget.querySelector('.tilt-card');
+        card.style.transform = 'none';
     }
 </script>
     </script>
 
     <script type="text/plain" id="code-lightbox">
-<style>
-.lightbox-modal {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 9999;
-    display: none; align-items: center; justify-content: center;
-}
-.lightbox-modal.active { display: flex; }
-</style>
+<!-- [Lightbox Viewer Component] -->
+    <style>
+        .lb-trigger {
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
 
-<!-- Trigger -->
-<div class="lightbox-trigger" onclick="document.getElementById('lb-modal').classList.add('active')" style="cursor:zoom-in">
-    <img src="preview.png" style="max-width:100%">
-</div>
+        .lb-trigger:hover {
+            transform: scale(1.02);
+        }
 
-<!-- Modal -->
-<div class="lightbox-modal" id="lb-modal" onclick="this.classList.remove('active')">
-    <img src="full-res.png" style="max-width:90%; max-height:90%; cursor:zoom-out">
-</div>
+        .lb-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            /* High Z-Index */
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .lb-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lb-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .lb-modal.active .lb-image {
+            transform: scale(1);
+        }
+    </style>
+
+    <!-- Trigger Image -->
+    <img class="lb-trigger" src="assets/REPLACE_THUMB.png" onclick="openLightbox(this)"
+        data-full="assets/REPLACE_FULL.png">
+
+    <!-- Shared Modal Structure (Paste once at bottom of page) -->
+    <div id="globalLightbox" class="lb-modal" onclick="closeLightbox()">
+        <img id="lbTarget" class="lb-image" src="">
+    </div>
+
+    <script>
+    function openLightbox(el) {
+        const fullSrc = el.getAttribute('data-full') || el.src; // Fallback to src
+        const modal = document.getElementById('globalLightbox');
+        const target = document.getElementById('lbTarget');
+        
+        target.src = fullSrc;
+        modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+        document.getElementById('globalLightbox').classList.remove('active');
+    }
+</script>
     </script>
 
     <!-- UI Component Logic (Hidden Code Sources) -->
 
     <script type="text/plain" id="code-btn-primary">
 <style>
-.btn-modern { border: none; border-radius: 8px; padding: 10px 24px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; }
-.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+/* Modern Button Variables */
+:root { --primary: #6366f1; --primary-hover: #4f46e5; }
+
+.btn-modern { 
+    border: none; border-radius: 8px; padding: 10px 24px; 
+    font-weight: 600; cursor: pointer; transition: all 0.2s; 
+    font-family: inherit;
+}
+.btn-primary { 
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover)); 
+    color: white; box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4); }
+.btn-primary:active { transform: translateY(0); }
 </style>
-<button class="btn-modern btn-primary">Primary</button>
+
+<button class="btn-modern btn-primary">Primary Action</button>
     </script>
 
     <script type="text/plain" id="code-btn-glass">
 <style>
-.btn-modern { border: none; border-radius: 8px; padding: 10px 24px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: white; }
-.btn-glass:hover { background: rgba(255, 255, 255, 0.2); }
+.btn-glass { 
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    color: white; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s;
+}
+.btn-glass:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.05); }
 </style>
-<button class="btn-modern btn-glass">Glass Button</button>
+
+<button class="btn-glass">Glass Button</button>
     </script>
 
     <script type="text/plain" id="code-input">
 <style>
-.input-group { position: relative; width: 100%; max-width: 300px; }
-.input-modern { width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; outline: none; background: white; }
-.input-label { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: white; padding: 0 4px; color: #6b7280; pointer-events: none; transition: 0.2s; }
+.input-group { position: relative; width: 100%; max-width: 300px; margin: 10px 0; }
+.input-modern { 
+    width: 100%; padding: 12px 16px; 
+    border: 1px solid #e5e7eb; border-radius: 8px; outline: none; 
+    background: white; transition: border-color 0.2s;
+}
 .input-modern:focus { border-color: #6366f1; }
-.input-modern:focus ~ .input-label, .input-modern:not(:placeholder-shown) ~ .input-label { top: 0; font-size: 0.75rem; color: #6366f1; }
+.input-label { 
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%); 
+    background: white; padding: 0 4px; color: #9ca3af; 
+    pointer-events: none; transition: 0.2s ease-out;
+}
+.input-modern:focus ~ .input-label, 
+.input-modern:not(:placeholder-shown) ~ .input-label { 
+    top: 0; font-size: 0.75rem; color: #6366f1;
+}
 </style>
+
 <div class="input-group">
     <input type="text" class="input-modern" placeholder=" ">
-    <label class="input-label">Label</label>
+    <label class="input-label">User Name</label>
 </div>
     </script>
 
     <script type="text/plain" id="code-toggle">
 <style>
-.toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.toggle-switch { position: relative; display: inline-block; width: 48px; height: 28px; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
-.toggle-switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-.toggle-switch .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-.toggle-switch input:checked + .slider { background-color: #2563eb; }
-.toggle-switch input:checked + .slider:before { transform: translateX(22px); }
+.slider { 
+    position: absolute; cursor: pointer; inset: 0; 
+    background-color: #e5e7eb; transition: .4s; border-radius: 34px; 
+}
+.slider:before { 
+    position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px; 
+    background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+input:checked + .slider { background-color: #3b82f6; }
+input:checked + .slider:before { transform: translateX(20px); }
 </style>
+
 <label class="toggle-switch">
     <input type="checkbox" checked>
-    <span class="slider round"></span>
+    <span class="slider"></span>
 </label>
     </script>
 
     <script type="text/plain" id="code-loader">
 <style>
-.loader-spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite; }
+.spinner { 
+    width: 40px; height: 40px; 
+    border: 4px solid #f3f3f3; border-top: 4px solid #3498db; 
+    border-radius: 50%; animation: spin 1s linear infinite; 
+}
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
-<div class="loader-spinner"></div>
+
+<div class="spinner"></div>
     </script>
 
     <script type="text/plain" id="code-card-glass">
 <style>
-.glass-card-demo { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 12px; color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.glass-card { 
+    background: rgba(255, 255, 255, 0.05); 
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    padding: 20px; border-radius: 16px; color: white; 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
 </style>
-<div class="glass-card-demo">
-    <h3>Glass Card</h3>
-    <p>Elegant translucency for dark backgrounds.</p>
+<div class="glass-card">
+    <h3 style="margin-top:0">Glassmorphism</h3>
+    <p>Soft blur effect, perfect for overlays.</p>
 </div>
+    </script>
+
+    <script type="text/plain" id="code-fx-snow">
+<style>
+    /* Full Screen Fixed Overlay */
+    #snowCanvas {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: 9999;
+    }
+</style>
+
+<canvas id="snowCanvas"></canvas>
+
+<script>
+(function() {
+    const canvas = document.getElementById('snowCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const particles = [];
+    
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Create Snowflakes
+    for(let i=0; i<50; i++) {
+        particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r: Math.random() * 3 + 1,
+            d: Math.random() * 10 + 20 // Density
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.beginPath();
+        for(let i=0; i<particles.length; i++) {
+            const p = particles[i];
+            ctx.moveTo(p.x, p.y);
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+        }
+        ctx.fill();
+        update();
+        requestAnimationFrame(draw);
+    }
+
+    let angle = 0;
+    function update() {
+        angle += 0.01;
+        for(let i=0; i<particles.length; i++) {
+            const p = particles[i];
+            // Update coordinates
+            p.y += Math.cos(angle+p.d) + 1 + p.r/2;
+            p.x += Math.sin(angle) * 2;
+
+            // Reset if out of view
+            if(p.x > width + 5 || p.x < -5 || p.y > height) {
+                if(i%3 > 0) { // 66% of the flakes
+                    particles[i] = {x: Math.random()*width, y: -10, r: p.r, d: p.d};
+                } else {
+                    // Enter from the right
+                    if(Math.sin(angle) > 0) {
+                        particles[i] = {x: -5, y: Math.random()*height, r: p.r, d: p.d};
+                    } else {
+                        particles[i] = {x: width+5, y: Math.random()*height, r: p.r, d: p.d};
+                    }
+                }
+            }
+        }
+    }
+
+    draw();
+})();
+</script>
+    </script>
+
+    <script type="text/plain" id="code-fx-bg">
+<style>
+    /* Smooth transition for background color */
+    body { transition: background-color 0.5s ease; }
+    
+    .bg-controls { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 8px; background: white; padding: 8px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; }
+    .bg-dot { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #ddd; cursor: pointer; transition: transform 0.2s; }
+    .bg-dot:hover { transform: scale(1.1); }
+</style>
+
+<div class="bg-controls">
+    <div class="bg-dot" style="background: #f3f4f6" onclick="setBg('#f3f4f6')" title="Light Gray"></div>
+    <div class="bg-dot" style="background: #E0F2FE" onclick="setBg('#E0F2FE')" title="Ice Blue"></div>
+    <div class="bg-dot" style="background: #111827" onclick="setBg('#111827')" title="Dark Mode"></div>
+</div>
+
+<script>
+    function setBg(color) {
+        document.body.style.backgroundColor = color;
+        // Optional: Toggle text color for dark mode
+        document.body.style.color = (color === '#111827') ? '#ffffff' : '#333333';
+    }
+</script>
+    </script>
+
+    <script type="text/plain" id="code-fx-firework">
+<script>
+(function() {
+    // 1. Setup Canvas
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    
+    let width = window.innerWidth, height = window.innerHeight;
+    window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+    width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
+
+    // 2. Data Structures
+    const rockets = [];
+    const particles = [];
+
+    // 3. Interaction
+    document.addEventListener('mousedown', (e) => {
+        // Avoid potentially interactive elements
+        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
+
+        const targetX = e.clientX;
+        const targetY = e.clientY;
+        // Red spectrum: 340-360 and 0-20
+        const hue = Math.random() > 0.5 ? Math.random() * 30 : 330 + Math.random() * 30;
+        
+        // Launch Rocket (Shoot from bottom)
+        rockets.push({
+            x: targetX, y: height, // Start at bottom
+            tx: targetX, ty: targetY, // Target
+            vx: 0, vy: (targetY - height) / 30, // 30 frames to reach
+            hue: hue
+        });
+    });
+
+    // 4. Animation Loop
+    function loop() {
+        // Trail Effect
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; 
+        ctx.fillRect(0, 0, width, height);
+        ctx.globalCompositeOperation = 'lighter';
+
+        // Update Rockets
+        for (let i = rockets.length - 1; i >= 0; i--) {
+            const r = rockets[i];
+            
+            // Draw Trail
+            ctx.beginPath();
+            ctx.moveTo(r.x, r.y);
+            r.x += r.vx; r.y += r.vy;
+            ctx.lineTo(r.x, r.y);
+            ctx.strokeStyle = `hsl(${r.hue}, 100%, 50%)`;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Explode if reached
+            if (r.y <= r.ty) {
+                createExplosion(r.x, r.y, r.hue);
+                rockets.splice(i, 1);
+            }
+        }
+
+        // Update Particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx; p.y += p.vy;
+            p.vy += 0.05; // Gravity
+            p.vx *= 0.95; p.vy *= 0.95; // Friction
+            p.alpha -= p.decay;
+
+            if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.alpha})`;
+            ctx.fill();
+        }
+        requestAnimationFrame(loop);
+    }
+
+    function createExplosion(x, y, hue) {
+        for (let i = 0; i < 60; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 4 + 2;
+            particles.push({
+                x: x, y: y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                hue: hue,
+                alpha: 1, decay: Math.random() * 0.02 + 0.01
+            });
+        }
+    }
+
+    loop();
+})();
+</script>
     </script>
 
     <script type="text/plain" id="code-game-ui">
 <style>
-.pause-card-mini { width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.2s; }
-.pause-card-mini:hover { transform: scale(1.1); }
-.history-card-mini { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 150px; }
-.history-title { font-weight: bold; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-</style>
-<!-- Pause Button -->
-<div class="pause-card-mini">
-   <div style="font-weight:900; color:#333;">||</div>
-</div>
+.ui-overlay-container { pointer-events: none; position: absolute; inset: 0; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+.ui-interactive { pointer-events: auto; }
 
-<!-- History Panel -->
-<div class="history-card-mini">
-    <div class="history-title">History</div>
-    <div>Score: 9999</div>
+/* Mini Components */
+.btn-pause { width: 44px; height: 44px; background: white; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.1s; }
+.btn-pause:active { transform: scale(0.95); }
+
+.score-panel { background: rgba(255,255,255,0.9); padding: 10px 20px; border-radius: 20px; font-weight: bold; font-family: monospace; font-size: 1.2rem; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+</style>
+
+<!-- Full Screen Game UI Overlay -->
+<div class="ui-overlay-container">
+    <!-- Top Row -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div class="score-panel">SCORE: 000</div>
+        <div class="btn-pause ui-interactive" onclick="alert('Pause')">||</div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div style="text-align: center;">
+        <span style="background: rgba(0,0,0,0.5); color: white; padding: 4px 12px; border-radius: 10px; font-size: 0.8rem;">Tap to Jump</span>
+    </div>
 </div>
     </script>
+
+    <!-- TEMPLATE: ADD NEW COMPONENT SOURCE HERE -->
+    <!-- <script type="text/plain" id="code-YOUR-ID">...</script> -->
 
     <!-- Hidden Canvas for Snow Effect -->
     <div style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; visibility:hidden;"
@@ -543,6 +929,7 @@
     <!-- Core & Components Logic -->
     <script src="core/snow-effect.js"></script>
     <script src="core/app.js"></script>
+    <script src="core/firework-effect.js"></script>
     <script src="components/demo-lion-dance/logic.js"></script>
     <script src="components/demo-tilt/logic.js"></script>
 
