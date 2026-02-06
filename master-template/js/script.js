@@ -123,20 +123,8 @@ function updateVisual(index) {
 
             if (typeof window.pauseGame === 'function') window.pauseGame();
 
-            // Mobile UX: Auto-expand the bottom sheet
-            if (window.innerWidth < 768) {
-                const visualContainer = document.getElementById('visualContainer');
-                if (visualContainer && visualContainer.classList.contains('minimized')) {
-                    visualContainer.classList.remove('minimized');
-                    const btn = document.getElementById('toggleSizeBtn');
-                    if (btn) {
-                        const expand = btn.querySelector('.icon-expand');
-                        const collapse = btn.querySelector('.icon-collapse');
-                        if (expand) expand.classList.add('hidden');
-                        if (collapse) collapse.classList.remove('hidden');
-                    }
-                }
-            }
+            // Mobile UX: Auto-expand logic removed for Modal Pattern
+            break;
             break;
 
         case 2: // Rules
@@ -156,30 +144,45 @@ function updateVisual(index) {
 
 function initMobileInteractions() {
     const container = document.getElementById('visualContainer');
-    const toggleBtn = document.getElementById('toggleSizeBtn');
+    const closeBtn = document.getElementById('toggleSizeBtn'); // This is now the close button
 
-    if (!container || !toggleBtn) return;
+    if (!container) return;
 
-    // 1. Toggle Button
-    const iconExpand = toggleBtn.querySelector('.icon-expand');
-    const iconCollapse = toggleBtn.querySelector('.icon-collapse');
+    // Open Modal (From Inline Buttons)
+    document.querySelectorAll('.js-open-modal').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
 
-    function updateIcons() {
-        if (container.classList.contains('minimized')) {
-            if (iconExpand) iconExpand.classList.remove('hidden');
-            if (iconCollapse) iconCollapse.classList.add('hidden');
-        } else {
-            if (iconExpand) iconExpand.classList.add('hidden');
-            if (iconCollapse) iconCollapse.classList.remove('hidden');
-        }
-    }
+            // Determine context based on button class
+            if (btn.classList.contains('btn-game')) {
+                if (typeof updateVisual === 'function') updateVisual(0);
+                if (typeof window.resumeGame === 'function') window.resumeGame();
+            } else if (btn.classList.contains('btn-gallery')) {
+                if (typeof updateVisual === 'function') updateVisual(1);
+            } else if (btn.classList.contains('btn-rules')) {
+                if (typeof updateVisual === 'function') updateVisual(2);
+            }
 
-    toggleBtn.addEventListener('click', () => {
-        container.classList.toggle('minimized');
-        // Reset height style if it was dragged (if we had drag logic)
-        container.style.removeProperty('height');
-        updateIcons();
+            container.classList.add('active');
+        });
     });
+
+    // Close Modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            container.classList.remove('active');
+
+            // PAUSE GAME / VIDEO on Close to save resources
+            const pauseEvent = new KeyboardEvent('keydown', { code: 'KeyP' });
+            window.dispatchEvent(pauseEvent); // Trigger game pause if running
+
+            if (typeof window.pauseGame === 'function') window.pauseGame();
+
+            // Also pause any videos if present
+            const videos = document.querySelectorAll('video');
+            videos.forEach(v => v.pause());
+        });
+    }
 }
 
 // Initial Load

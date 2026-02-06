@@ -49,6 +49,7 @@ function initGalleryList() {
             <div class="eq-lat"></div>
             <div class="eq-info">
                 <div class="eq-name">${item.title}</div>
+                <span class="eq-hint hidden-desktop" style="font-size: 0.75rem; color: #9ca3af; margin-top: 2px;">点击查看详情</span>
             </div>
         `;
 
@@ -57,14 +58,17 @@ function initGalleryList() {
 
     // 默认展示第一个
     if (galleryData.length > 0) {
-        selectGalleryItem(0);
+        // Init without opening modal (pass false)
+        selectGalleryItem(0, false);
     }
 }
 
 /**
  * 选中某个图鉴项
+ * @param {number} index - 索引
+ * @param {boolean} openModal - 是否在移动端自动打开模态 (默认 true)
  */
-function selectGalleryItem(index) {
+function selectGalleryItem(index, openModal = true) {
     const item = galleryData[index];
     if (!item) return;
 
@@ -87,10 +91,22 @@ function selectGalleryItem(index) {
         if (item.image) {
             imgEl.src = item.image;
             imgEl.style.display = 'block';
-            imgEl.parentElement.querySelector('div').style.display = 'none'; // Hide placeholder
+            const placeholder = imgEl.parentElement.querySelector('div');
+            if (placeholder) placeholder.style.display = 'none';
         } else {
             imgEl.style.display = 'none';
-            imgEl.parentElement.querySelector('div').style.display = 'flex'; // Show placeholder
+            const placeholder = imgEl.parentElement.querySelector('div');
+            if (placeholder) placeholder.style.display = 'flex';
+        }
+    }
+
+    // 3. Mobile UX: 打开模态窗口
+    if (openModal && window.innerWidth < 768) {
+        const visualContainer = document.getElementById('visualContainer');
+        if (visualContainer) {
+            // 确保先切换到 Gallery 视图(index 1)
+            if (typeof updateVisual === 'function') updateVisual(1);
+            visualContainer.classList.add('active');
         }
     }
 }

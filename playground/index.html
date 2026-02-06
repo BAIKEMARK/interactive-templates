@@ -287,6 +287,287 @@
             </div>
         </div>
 
+        <!-- Category: Micro Interactions (NEW) -->
+        <div class="ui-card" data-category="demo">
+            <div class="ui-card-preview" style="background: #1a1a1a;">
+                <!-- Preview Implementation: Lantern -->
+                <div class="lantern-wrapper" onclick="this.classList.toggle('lit')" style="cursor: pointer;">
+                    <div class="lantern-string"></div>
+                    <div class="lantern-body">
+                        <div class="lantern-light"></div>
+                        <div class="lantern-text">福</div>
+                    </div>
+                    <div class="lantern-tassel"></div>
+                </div>
+                <style>
+                    .lantern-wrapper {
+                        position: relative;
+                        animation: swing 3s infinite ease-in-out;
+                        transform-origin: top center;
+                    }
+
+                    .lantern-string {
+                        width: 2px;
+                        height: 20px;
+                        background: #dda0dd;
+                        margin: 0 auto;
+                        background: #F59E0B;
+                    }
+
+                    .lantern-body {
+                        width: 60px;
+                        height: 50px;
+                        background: #DC2626;
+                        border-radius: 15px;
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+                        border: 2px solid #B91C1C;
+                        transition: all 0.5s;
+                    }
+
+                    .lantern-body::before,
+                    .lantern-body::after {
+                        content: '';
+                        position: absolute;
+                        width: 40px;
+                        height: 6px;
+                        background: #F59E0B;
+                        left: 8px;
+                        border-radius: 2px;
+                    }
+
+                    .lantern-body::before {
+                        top: -4px;
+                    }
+
+                    .lantern-body::after {
+                        bottom: -4px;
+                    }
+
+                    .lantern-text {
+                        color: #FCD34D;
+                        font-family: serif;
+                        font-weight: bold;
+                        font-size: 24px;
+                        pointer-events: none;
+                    }
+
+                    .lantern-tassel {
+                        width: 4px;
+                        height: 30px;
+                        background: #EF4444;
+                        margin: 0 auto;
+                        margin-top: 4px;
+                        border-radius: 0 0 4px 4px;
+                        box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+                    }
+
+                    /* Lit State */
+                    .lantern-wrapper.lit .lantern-body {
+                        background: #EF4444;
+                        box-shadow: 0 0 30px #EF4444, inset 0 0 20px #FCA5A5;
+                        border-color: #F87171;
+                    }
+
+                    .lantern-wrapper.lit .lantern-text {
+                        text-shadow: 0 0 5px #fff;
+                    }
+
+                    @keyframes swing {
+
+                        0%,
+                        100% {
+                            transform: rotate(-5deg);
+                        }
+
+                        50% {
+                            transform: rotate(5deg);
+                        }
+                    }
+                </style>
+                <div class="overlay-hint">点击点亮</div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-lantern">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">摇曳灯笼 (Lantern)</span>
+                <span class="ui-tag">#FX-LANTERN</span>
+            </div>
+        </div>
+
+        <div class="ui-card" data-category="demo">
+            <div class="ui-card-preview">
+                <!-- Preview Implementation: Coffee -->
+                <div class="coffee-container" onclick="triggerSteam(this)" style="cursor: pointer;">
+                    <div class="steam-group">
+                        <div class="steam s1"></div>
+                        <div class="steam s2"></div>
+                        <div class="steam s3"></div>
+                    </div>
+                    <svg viewBox="0 0 100 100" class="coffee-svg" width="80">
+                        <defs>
+                            <linearGradient id="cupGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#f3f4f6" />
+                                <stop offset="100%" style="stop-color:#e5e7eb" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M20,30 Q20,80 50,80 Q80,80 80,30 L20,30" fill="url(#cupGrad)" stroke="#d1d5db"
+                            stroke-width="2" />
+                        <path d="M80,40 Q95,40 95,55 Q95,70 80,65" fill="none" stroke="#d1d5db" stroke-width="5"
+                            stroke-linecap="round" />
+                        <ellipse cx="50" cy="30" rx="30" ry="5" fill="#4B2C20" opacity="0.9" />
+                    </svg>
+                </div>
+                <!-- Inline minimal JS for preview -->
+                <script>
+                    function triggerSteam(el) {
+                        const steam = el.querySelectorAll('.steam');
+                        steam.forEach(s => {
+                            s.style.animation = 'none';
+                            s.offsetHeight; /* trigger reflow */
+                            s.style.animation = null;
+                            s.classList.add('active');
+                            setTimeout(() => s.classList.remove('active'), 2000);
+                        });
+                    }
+                </script>
+                <style>
+                    .coffee-container {
+                        position: relative;
+                        margin-top: 20px;
+                    }
+
+                    .steam-group {
+                        position: absolute;
+                        top: -20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 40px;
+                        height: 40px;
+                        pointer-events: none;
+                    }
+
+                    .steam {
+                        position: absolute;
+                        background: rgba(200, 200, 200, 0.6);
+                        width: 8px;
+                        height: 20px;
+                        border-radius: 10px;
+                        filter: blur(3px);
+                        opacity: 0;
+                    }
+
+                    .steam.active {
+                        animation: rise 1.5s ease-out forwards;
+                    }
+
+                    .s1 {
+                        left: 5px;
+                        animation-delay: 0s;
+                    }
+
+                    .s2 {
+                        left: 16px;
+                        animation-delay: 0.2s;
+                    }
+
+                    .s3 {
+                        left: 27px;
+                        animation-delay: 0.4s;
+                    }
+
+                    @keyframes rise {
+                        0% {
+                            transform: translateY(0) scale(1);
+                            opacity: 0;
+                        }
+
+                        50% {
+                            opacity: 0.8;
+                        }
+
+                        100% {
+                            transform: translateY(-30px) scale(2);
+                            opacity: 0;
+                        }
+                    }
+                </style>
+                <div class="overlay-hint">点击冒热气</div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-coffee">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">热咖啡 (Coffee)</span>
+                <span class="ui-tag">#FX-COFFEE</span>
+            </div>
+        </div>
+
+        <div class="ui-card" data-category="demo">
+            <div class="ui-card-preview">
+                <!-- Preview Implementation: Lion -->
+                <!-- Preview Implementation: Lion (Imported Asset) -->
+                <style>
+                    @keyframes lion-shake {
+
+                        0%,
+                        100% {
+                            transform: rotate(0deg) scale(1);
+                        }
+
+                        25% {
+                            transform: rotate(-5deg) scale(1.05);
+                        }
+
+                        50% {
+                            transform: rotate(5deg) scale(1.05);
+                        }
+
+                        75% {
+                            transform: rotate(-5deg) scale(1.05);
+                        }
+                    }
+
+                    .lion-wrapper {
+                        width: 140px;
+                        height: 140px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+                    }
+                </style>
+                <div class="lion-wrapper" onclick="danceLion(this)" style="cursor: pointer;">
+                    <img src="assets/lion-head-pro.svg" alt="Southern Lion"
+                        style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <script>
+                    function danceLion(el) {
+                        const img = el.querySelector('img');
+                        // Reset animation
+                        img.style.animation = 'none';
+                        img.offsetHeight; /* trigger reflow */
+                        img.style.animation = 'lion-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97)';
+
+                        // Optional: Vibration effect for responsiveness
+                        if (navigator.vibrate) navigator.vibrate(50);
+                    }
+                </script>
+                <div class="overlay-hint">点击舞动</div>
+            </div>
+            <div class="ui-card-actions">
+                <button class="action-btn" onclick="copyCode(this, 'code')" data-target-id="code-lion">复制源码</button>
+            </div>
+            <div class="ui-card-footer">
+                <span class="ui-name">醒狮舞动 (Dance)</span>
+                <span class="ui-tag">#FX-LION-PRO</span>
+            </div>
+        </div>
+
         <!-- TEMPLATE: HOW TO ADD NEW COMPONENT
          1. Copy this block.
          2. Replace 'YOUR-CATEGORY', 'YOUR-ID' and content.
@@ -789,105 +1070,269 @@ input:checked + .slider:before { transform: translateX(20px); }
 </script>
     </script>
 
-    <script type="text/plain" id="code-fx-firework">
-<script>
-(function() {
-    // 1. Setup Canvas
-    const canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;';
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
+    <script type="text/plain" id="code-lantern">
+<style>
+    /* 1. Lantern Animation */
+    @keyframes swing { 
+        0%, 100% { transform: rotate(-5deg); } 
+        50% { transform: rotate(5deg); } 
+    }
     
-    let width = window.innerWidth, height = window.innerHeight;
-    window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
-    width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
+    .fx-lantern-wrapper {
+        position: relative; width: fit-content; margin: 20px auto;
+        animation: swing 3s infinite ease-in-out; transform-origin: top center;
+        cursor: pointer;
+    }
 
-    // 2. Data Structures
-    const rockets = [];
-    const particles = [];
+    /* String */
+    .lantern-string { width: 2px; height: 30px; background: #F59E0B; margin: 0 auto; }
 
-    // 3. Interaction
-    document.addEventListener('mousedown', (e) => {
-        // Avoid potentially interactive elements
-        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
+    /* Body */
+    .lantern-body { 
+        width: 80px; height: 65px; 
+        background-color: #DC2626; /* Red-600 */
+        border: 2px solid #991B1B; /* Red-800 */
+        border-radius: 20px;
+        position: relative;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+        transition: all 0.5s ease;
+    }
+    
+    /* Gold Bands */
+    .lantern-body::before, .lantern-body::after {
+        content: ''; position: absolute; left: 10px; right: 10px; height: 6px;
+        background: #F59E0B; /* Amber-500 */ border-radius: 3px;
+    }
+    .lantern-body::before { top: -4px; }
+    .lantern-body::after { bottom: -4px; }
 
-        const targetX = e.clientX;
-        const targetY = e.clientY;
-        // Red spectrum: 340-360 and 0-20
-        const hue = Math.random() > 0.5 ? Math.random() * 30 : 330 + Math.random() * 30;
-        
-        // Launch Rocket (Shoot from bottom)
-        rockets.push({
-            x: targetX, y: height, // Start at bottom
-            tx: targetX, ty: targetY, // Target
-            vx: 0, vy: (targetY - height) / 30, // 30 frames to reach
-            hue: hue
+    /* Text */
+    .lantern-text { 
+        color: #FCD34D; font-size: 32px; font-weight: bold; font-family: "Kaiti", serif;
+        user-select: none; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* Tassel */
+    .lantern-tassel {
+        width: 6px; height: 50px; background: #dc2626; margin: 0 auto; margin-top: 5px;
+        border-radius: 0 0 4px 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Interactive: Lit */
+    .fx-lantern-wrapper.lit .lantern-body {
+        background-color: #EF4444; /* Red-500 (Brighter) */
+        box-shadow: 0 0 50px rgba(239, 68, 68, 0.6), inset 0 0 20px #FCA5A5;
+        border-color: #F87171;
+    }
+    .fx-lantern-wrapper.lit .lantern-text {
+        text-shadow: 0 0 10px #fff, 0 0 20px #FCD34D;
+        color: #FFFBEB;
+    }
+</style>
+
+<div class="fx-lantern-wrapper" onclick="this.classList.toggle('lit')">
+    <div class="lantern-string"></div>
+    <div class="lantern-body">
+        <div class="lantern-text">福</div>
+    </div>
+    <div class="lantern-tassel"></div>
+</div>
+    </script>
+
+    <script type="text/plain" id="code-coffee">
+<style>
+    .fx-coffee-container {
+        position: relative; width: 100px; height: 100px; margin: 30px auto;
+        cursor: pointer;
+    }
+    
+    /* Steam Particles */
+    .steam-particle {
+        position: absolute; width: 10px; height: 25px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 10px; filter: blur(4px); opacity: 0;
+        top: 0; left: 50%; pointer-events: none;
+    }
+    
+    /* Animation definition */
+    @keyframes steam-rise {
+        0% { transform: translateY(0) scale(1) translateX(0); opacity: 0; }
+        20% { opacity: 0.6; }
+        100% { transform: translateY(-40px) scale(2.5) translateX(10px); opacity: 0; }
+    }
+
+    /* Cup Implementation (Inline SVG for clean code) */
+    .coffee-svg { overflow: visible; }
+</style>
+
+<div class="fx-coffee-container" onclick="puffSteam(this)">
+    <div class="steam-group">
+        <div class="steam-particle" style="left: 35%;"></div>
+        <div class="steam-particle" style="left: 50%;"></div>
+        <div class="steam-particle" style="left: 65%;"></div>
+    </div>
+    
+    <svg viewBox="0 0 100 80" class="coffee-svg">
+        <defs>
+            <linearGradient id="cupMain" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#F3F4F6"/>
+                <stop offset="100%" stop-color="#E5E7EB"/>
+            </linearGradient>
+        </defs>
+        <path d="M15,10 Q15,60 50,60 Q85,60 85,10 L15,10" fill="url(#cupMain)" stroke="#D1D5DB" stroke-width="2"/>
+        <path d="M85,20 Q98,20 98,35 Q98,50 85,45" fill="none" stroke="#D1D5DB" stroke-width="6" stroke-linecap="round"/>
+        <ellipse cx="50" cy="10" rx="35" ry="6" fill="#4B2C20"/>
+    </svg>
+</div>
+
+<script>
+    function puffSteam(container) {
+        const parts = container.querySelectorAll('.steam-particle');
+        parts.forEach((p, i) => {
+            // Reset animation hack
+            p.style.animation = 'none';
+            p.offsetHeight; 
+            // Stagger animation
+            p.style.animation = `steam-rise 1.5s ease-out forwards ${i * 0.2}s`;
         });
-    });
-
-    // 4. Animation Loop
-    function loop() {
-        // Trail Effect
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; 
-        ctx.fillRect(0, 0, width, height);
-        ctx.globalCompositeOperation = 'lighter';
-
-        // Update Rockets
-        for (let i = rockets.length - 1; i >= 0; i--) {
-            const r = rockets[i];
-            
-            // Draw Trail
-            ctx.beginPath();
-            ctx.moveTo(r.x, r.y);
-            r.x += r.vx; r.y += r.vy;
-            ctx.lineTo(r.x, r.y);
-            ctx.strokeStyle = `hsl(${r.hue}, 100%, 50%)`;
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            // Explode if reached
-            if (r.y <= r.ty) {
-                createExplosion(r.x, r.y, r.hue);
-                rockets.splice(i, 1);
-            }
-        }
-
-        // Update Particles
-        for (let i = particles.length - 1; i >= 0; i--) {
-            const p = particles[i];
-            p.x += p.vx; p.y += p.vy;
-            p.vy += 0.05; // Gravity
-            p.vx *= 0.95; p.vy *= 0.95; // Friction
-            p.alpha -= p.decay;
-
-            if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.alpha})`;
-            ctx.fill();
-        }
-        requestAnimationFrame(loop);
     }
-
-    function createExplosion(x, y, hue) {
-        for (let i = 0; i < 60; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const speed = Math.random() * 4 + 2;
-            particles.push({
-                x: x, y: y,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                hue: hue,
-                alpha: 1, decay: Math.random() * 0.02 + 0.01
-            });
-        }
-    }
-
-    loop();
-})();
 </script>
+    </script>
+
+    <script type="text/plain" id="code-lion">
+<style>
+    @keyframes lion-shake {
+        0%, 100% { transform: rotate(0deg) scale(1); }
+        25% { transform: rotate(-5deg) scale(1.05); }
+        50% { transform: rotate(5deg) scale(1.05); }
+        75% { transform: rotate(-5deg) scale(1.05); }
+    }
+    
+    .fx-lion-wrapper {
+        width: 140px; height: 140px; margin: 0 auto;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    }
+</style>
+
+<div class="fx-lion-wrapper" onclick="playLionDance(this)">
+    <!-- Requires 'lion-head-pro.svg' in assets folder -->
+    <img src="assets/lion-head-pro.svg" alt="Southern Lion" style="width: 100%; height: 100%; object-fit: contain;">
+</div>
+
+<script>
+    function playLionDance(el) {
+        const img = el.querySelector('img');
+        img.style.animation = 'none'; // Reset
+        img.offsetHeight; // Force reflow
+        img.style.animation = 'lion-shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97)';
+    }
+</script>
+
+
+    </script>
+
+    <script type="text/plain" id="code-fx-firework">
+    <script>
+        (function () {
+            // 1. Setup Canvas
+            const canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;';
+            document.body.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+
+            let width = window.innerWidth, height = window.innerHeight;
+            window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+            width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight;
+
+            // 2. Data Structures
+            const rockets = [];
+            const particles = [];
+
+            // 3. Interaction
+            document.addEventListener('mousedown', (e) => {
+                // Avoid potentially interactive elements
+                if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
+
+                const targetX = e.clientX;
+                const targetY = e.clientY;
+                // Red spectrum: 340-360 and 0-20
+                const hue = Math.random() > 0.5 ? Math.random() * 30 : 330 + Math.random() * 30;
+
+                // Launch Rocket (Shoot from bottom)
+                rockets.push({
+                    x: targetX, y: height, // Start at bottom
+                    tx: targetX, ty: targetY, // Target
+                    vx: 0, vy: (targetY - height) / 30, // 30 frames to reach
+                    hue: hue
+                });
+            });
+
+            // 4. Animation Loop
+            function loop() {
+                // Trail Effect
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, width, height);
+                ctx.globalCompositeOperation = 'lighter';
+
+                // Update Rockets
+                for (let i = rockets.length - 1; i >= 0; i--) {
+                    const r = rockets[i];
+
+                    // Draw Trail
+                    ctx.beginPath();
+                    ctx.moveTo(r.x, r.y);
+                    r.x += r.vx; r.y += r.vy;
+                    ctx.lineTo(r.x, r.y);
+                    ctx.strokeStyle = `hsl(${r.hue}, 100%, 50%)`;
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+
+                    // Explode if reached
+                    if (r.y <= r.ty) {
+                        createExplosion(r.x, r.y, r.hue);
+                        rockets.splice(i, 1);
+                    }
+                }
+
+                // Update Particles
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.x += p.vx; p.y += p.vy;
+                    p.vy += 0.05; // Gravity
+                    p.vx *= 0.95; p.vy *= 0.95; // Friction
+                    p.alpha -= p.decay;
+
+                    if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 100%, 60%, ${p.alpha})`;
+                    ctx.fill();
+                }
+                requestAnimationFrame(loop);
+            }
+
+            function createExplosion(x, y, hue) {
+                for (let i = 0; i < 60; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 4 + 2;
+                    particles.push({
+                        x: x, y: y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        hue: hue,
+                        alpha: 1, decay: Math.random() * 0.02 + 0.01
+                    });
+                }
+            }
+
+            loop();
+        })();
+    </script>
     </script>
 
     <script type="text/plain" id="code-game-ui">

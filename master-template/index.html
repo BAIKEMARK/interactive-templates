@@ -54,6 +54,9 @@
                                     <p class="description">
                                         在这里描述您的核心玩法。例如：控制<strong class="text-dark">角色</strong>
                                         完成挑战！保持平衡，夺取高分。
+                                        <button class="action-btn-inline btn-game js-open-modal">
+                                            <span>👉 开始体验</span>
+                                        </button>
                                     </p>
 
                                     <div class="stats-grid">
@@ -151,6 +154,9 @@
                                 <div class="module-content">
                                     <p class="description">
                                         介绍核心规则或文化背景。
+                                        <button class="action-btn-inline btn-rules js-open-modal">
+                                            <span>👉 查看演示</span>
+                                        </button>
                                     </p>
                                     <div class="rules-list">
                                         <div class="rule-card rule-orange">
@@ -207,15 +213,14 @@
         </div>
 
         <!-- Right Column: Visual -->
-        <div class="visual-container minimized" id="visualContainer">
-            <div class="resize-handle"></div>
-            <button class="toggle-size-btn" id="toggleSizeBtn" aria-label="Toggle Size">
-                <svg class="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-                </svg>
-                <svg class="icon-collapse hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        <!-- Right Column: Visual Container (Now Modal on Mobile) -->
+        <div class="visual-container" id="visualContainer">
+            <!-- Modal Close Button (Mobile Only) -->
+            <button class="modal-close-btn hidden-desktop" id="toggleSizeBtn" aria-label="关闭">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
             <div id="visual-content">

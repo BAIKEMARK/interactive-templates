@@ -838,67 +838,130 @@ h3 {
   will-change: height;
 }
 
+/* Button Components */
+.action-btn-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.6rem;
+  margin-left: 0.5rem;
+  background-color: #fff;
+  color: var(--text-primary);
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  vertical-align: middle;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.action-btn-inline:hover {
+  background-color: #f3f4f6;
+  transform: translateY(-1px);
+}
+
+.action-btn-inline svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Right Column: Visual Container */
+.visual-container {
+  display: flex;
+  width: 100%;
+  height: 40vh;
+  flex-shrink: 0;
+  background-color: transparent;
+  /* Transparent to show body bg */
+  /* Show on bottom (default order) */
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  /* Add a top shadow to separate from list */
+  box-shadow: none;
+  /* Removed shadow */
+  z-index: 20;
+
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: height;
+}
+
 /* Bottom Sheet States (Mobile Only) */
 @media (max-width: 767px) {
+
+  /* Default State: Hidden Modal */
   .visual-container {
-    height: 60vh;
-    /* Full Mode */
-  }
-
-  .visual-container.minimized {
-    height: 120px;
-    /* Mini Mode */
-  }
-
-  /* Hide/Compact elements in Mini Mode */
-  .visual-container.minimized .game-footer {
-    display: none;
-  }
-
-  .visual-container.minimized .game-hud {
-    transform: scale(0.8);
+    padding: 0;
+    position: fixed;
     top: 0;
     left: 0;
-    padding: 0.25rem;
-    background: transparent;
-    box-shadow: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+
+    /* Premium Glassmorphism Background */
+    background: rgba(255, 253, 248, 0.85);
+    /* Warm white tint */
+    display: flex !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    transform: translateY(110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.3s;
+
+    /* Center content */
+    flex-direction: column;
+    justify-content: center;
+    /* Vertically center */
+    overflow-y: auto;
+    border-radius: 0;
+  }
+
+  /* Active State: Fullscreen Modal */
+  .visual-container.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Modal Close Button */
+  .modal-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #f3f4f6;
     border: none;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    cursor: pointer;
   }
 
-  .visual-container.minimized .pause-btn {
-    top: 0.5rem;
-    right: 3rem;
-    /* Move left of toggle button */
-    transform: scale(0.8);
-  }
-
-  /* Gallery in Minimized Mode */
-  .visual-container.minimized .gallery-wrapper {
-    padding: 0.5rem;
-  }
-
-  .visual-container.minimized .gallery-stage {
-    padding: 0.5rem;
-  }
-
-  .visual-container.minimized .stage-visual {
-    min-height: 60px;
-    height: 100%;
-  }
-
-  .visual-container.minimized .gallery-image {
-    max-height: 80px;
-    max-width: 80%;
-    object-fit: contain;
-  }
-
-  .visual-container.minimized .stage-info {
-    display: none;
-    /* Hide text in mini mode */
+  /* Adjust Content Layout in Modal */
+  .visual-container #visual-content {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Vertically center */
+    padding-top: 0;
+    /* Remove top padding to ensure true center */
+    padding: 1rem;
   }
 }
 
-/* Drag Handle */
+/* Drag Handle Removed */
 .resize-handle {
   position: absolute;
   top: 0;
@@ -913,37 +976,9 @@ h3 {
   /* Touch target */
 }
 
-.resize-handle::after {
-  content: '';
-  width: 40px;
-  height: 4px;
-  background-color: #d1d5db;
-  border-radius: 2px;
-}
+/* Drag Handle Removed */
 
-/* Toggle Button */
-.toggle-size-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background: white;
-  border: 1px solid #e5e7eb;
-  color: #6b7280;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 35;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.toggle-size-btn svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
+/* Toggle Button Removed */
 
 #visual-content {
   width: 100%;
@@ -1020,7 +1055,8 @@ h3 {
   }
 
   .resize-handle,
-  .toggle-size-btn {
+  .toggle-size-btn,
+  .modal-close-btn {
     display: none;
   }
 
