@@ -1845,8 +1845,9 @@ h3 {
   padding: 1.5rem;
   border-radius: 1rem;
   width: 90%;
-  max-width: 320px;
-  position: relative;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
 }
 
 .history-header {
@@ -1854,6 +1855,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  flex-shrink: 0;
 }
 
 .history-title {
@@ -1884,8 +1886,9 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-height: 240px;
   overflow-y: auto;
+  min-height: 0;
+  flex: 1;
 }
 
 .history-item {

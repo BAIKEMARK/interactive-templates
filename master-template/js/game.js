@@ -29,9 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * 游戏初始化
  */
+/**
+ * 游戏初始化
+ */
 function initGame() {
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    initCanvas(); // Use consistent naming
+    // window.addEventListener('resize', resizeCanvas); // Removed resize listener ref to avoid resetting resolution
 
     // 绑定暂停遮罩点击恢复事件
     const pauseOverlay = document.getElementById('pauseOverlay');
@@ -54,6 +57,11 @@ function initGame() {
     const inactiveOverlay = document.getElementById('inactiveOverlay');
     if (inactiveOverlay) {
         inactiveOverlay.addEventListener('click', startGame);
+        // Add touch support for mobile
+        inactiveOverlay.addEventListener('touchstart', (e) => {
+            if (e.cancelable) e.preventDefault(); // Prevent scroll/ghost clicks
+            startGame();
+        }, { passive: false });
     }
 
     const pauseBtn = document.getElementById('visualPauseBtn');
@@ -133,16 +141,24 @@ function initGame() {
 }
 
 /**
- * 调整 Canvas 尺寸
+ * 初始化 Canvas (高分屏适配 & 固定逻辑分辨率)
  */
-function resizeCanvas() {
-    const parent = canvas.parentElement;
-    if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-    }
-    // 重绘一帧确保不白屏
-    draw();
+function initCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    // 逻辑尺寸 (保持 16:9 比例)
+    const logicalWidth = 800;
+    const logicalHeight = 450;
+
+    // 设置 CSS 样式，让浏览器负责缩放
+    canvas.style.width = '100%';
+    canvas.style.height = 'auto'; // 保持宽高比
+
+    // 设置内存中的实际像素尺寸 (乘以 dpr 以获得高清效果)
+    canvas.width = Math.floor(logicalWidth * dpr);
+    canvas.height = Math.floor(logicalHeight * dpr);
+
+    // 标准化坐标系，使得 draw() 中可以使用逻辑坐标
+    ctx.scale(dpr, dpr);
 }
 
 /**
@@ -327,9 +343,9 @@ window.GameUI = {
                 newRecord.isRecord = true;
             }
 
-            // 只保留前10条
-            const top10 = history.slice(0, 10);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(top10));
+            // 只保留前8条
+            const top8 = history.slice(0, 8);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(top8));
 
             console.log('Record saved:', newRecord);
         } catch (e) {
